@@ -3,7 +3,7 @@
 
 ren::StateMachine::StateMachine()
 {
-	currentState = nullptr;
+	current_state = nullptr;
 }
 
 ren::StateMachine::~StateMachine()
@@ -18,13 +18,13 @@ ren::StateMachine* ren::StateMachine::access()
 
 void ren::StateMachine::changeState(State* newState)
 {
-	State* temp = currentState;
-	currentState = newState;
-	currentState->initialize();
+	State* temp = current_state;
+	current_state = newState;
+	current_state->initialize();
 	delete[] temp;
 }
 
 State* &ren::StateMachine::getActiveState()
 {
-	return currentState;
+	return current_state;
 }

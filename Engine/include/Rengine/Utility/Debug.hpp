@@ -1,7 +1,7 @@
 #pragma once
 #include<iostream>
 #include<fstream>
-#include"Rengine/utility/Utility.hpp"
+#include"Rengine/utility/Misc.hpp"
 #include"Rengine/Config.hpp"
 
 namespace ren
@@ -17,5 +17,8 @@ namespace ren
         };
         static void log();
         static void log(std::string message, MessageType m_type = MessageType::INFO);
+    private:
+        inline static std::string end = "\033[m";
+        inline static std::string color = "\033[0m";
     };
 }

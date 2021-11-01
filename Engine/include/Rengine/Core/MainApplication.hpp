@@ -12,7 +12,7 @@ namespace ren
 	class REN_API MainApplication
 	{
 	public:
-		MainApplication(sf::VideoMode Vmode, std::string name = "NewWindow");
+		MainApplication(sf::VideoMode videomode, std::string name = "NewWindow");
 		~MainApplication();
 
 		void run(State* firstState);
@@ -20,7 +20,7 @@ namespace ren
 		void closeApplication();
 
 	private:
-		sf::VideoMode Vmode;
+		sf::VideoMode video_mode;
 		sf::RenderWindow window;
 	};
 }

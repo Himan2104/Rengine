@@ -11,7 +11,12 @@
 
 namespace ren
 {
-
+    /*
+    \brief Get the current date+time as a string
+    \param Time format as a string/const char*
+    \see  Format String for std::put_time
+    The default format is [YYYY-MM-DD|HH:MM:SS]
+    */
     static std::string getCurrentTime(const char* format = "[%Y-%m-%d|%X]")
     {
         auto now = std::chrono::system_clock::now();

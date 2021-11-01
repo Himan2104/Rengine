@@ -2,10 +2,10 @@
 #include "Rengine/core/MainApplication.hpp"
 #include "Rengine/core/StateMachine.hpp"
 
-ren::MainApplication::MainApplication(sf::VideoMode Vmode, std::string name)
+ren::MainApplication::MainApplication(sf::VideoMode videomode, std::string name)
 {
-	this->Vmode = Vmode;
-	window.create(this->Vmode, name, sf::Style::Close);
+	this->video_mode = videomode;
+	window.create(this->video_mode, name, sf::Style::Close);
 	window.setFramerateLimit(0);
 	//AssetManager::access()->loadGlobalAssets();
 }

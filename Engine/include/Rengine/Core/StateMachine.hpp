@@ -20,6 +20,6 @@ namespace ren
 		State*& getActiveState();
 
 	private:
-		State* currentState;
+		State* current_state;
 	};
 }
