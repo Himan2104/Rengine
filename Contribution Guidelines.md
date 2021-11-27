@@ -5,7 +5,7 @@ ___
 The first thing you wanna do is send me an email over at himan2104@gmail.com so that I can add you to the list of contributors (which is for my reference). Next we can discuss a few specifics and I can give you a walkthrough of the already existing codebase.
 ___
 ## Coding Style
-While contributing to this project please try to maintain a similar coding style as the project. 
+While contributing to this project please try to maintain a similar coding style as the project which in turns keeps its style as close to SFML as possible. 
 
 Styling reference for class names
 ~~~ 
