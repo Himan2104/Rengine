@@ -12,7 +12,7 @@ namespace ren
 	class REN_API MainApplication
 	{
 	public:
-		MainApplication(sf::VideoMode videomode, std::string name = "NewWindow");
+		MainApplication(ApplicationProperties app_properties);
 		~MainApplication();
 
 		void run(State* firstState);
@@ -22,5 +22,19 @@ namespace ren
 	private:
 		sf::VideoMode video_mode;
 		sf::RenderWindow window;
+	};
+
+	struct REN_API Settings
+	{
+		sf::VideoMode video_mode;
+		int framerate_limit;
+		bool fullscreen;
+		bool vsync;
+	};
+
+	struct REN_API ApplicationProperties
+	{
+		std::string name;
+		Settings settings;
 	};
 }

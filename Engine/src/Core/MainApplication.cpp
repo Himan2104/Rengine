@@ -1,12 +1,13 @@
 #include <typeinfo>
-#include "Rengine/core/MainApplication.hpp"
-#include "Rengine/core/StateMachine.hpp"
+#include "Rengine/Core/MainApplication.hpp"
+#include "Rengine/Core/StateMachine.hpp"
 
-ren::MainApplication::MainApplication(sf::VideoMode videomode, std::string name)
+ren::MainApplication::MainApplication(ren::ApplicationProperties app_properties)
 {
-	this->video_mode = videomode;
-	window.create(this->video_mode, name, sf::Style::Close);
-	window.setFramerateLimit(0);
+	window.create(app_properties.settings.video_mode, 
+		app_properties.name, 
+		app_properties.settings.fullscreen ? sf::Style::Fullscreen : sf::Style::Close);
+	window.setFramerateLimit(app_properties.settings.framerate_limit);
 	//AssetManager::access()->loadGlobalAssets();
 }
 
@@ -19,7 +20,6 @@ ren::MainApplication::~MainApplication()
 void ren::MainApplication::run(State* firstState)
 {
 	StateMachine::access()->changeState(firstState);
-
 	TimeKeeper::initializeTime();
 
 	while (window.isOpen())

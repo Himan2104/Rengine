@@ -17,7 +17,7 @@ namespace ren
     \see  Format String for std::put_time
     The default format is [YYYY-MM-DD|HH:MM:SS]
     */
-    static std::string getCurrentTime(const char* format = "[%Y-%m-%d|%X]")
+    std::string getCurrentTime(const char* format = "[%Y-%m-%d|%X]")
     {
         auto now = std::chrono::system_clock::now();
         auto in_time_t = std::chrono::system_clock::to_time_t(now);
@@ -28,13 +28,24 @@ namespace ren
         return ss.str();
     }
 
+    /*
+    \brief Center the origin of any object that derives from sf::Transformable*/
+    //TODO: Get rid of the template. Very unsafe. Using this approach since
+    //getGlobalBounds is defined differently in sf::Shape and sf::Sprite separately.
+    //This will however be fixed inevidently when I create my own ECS for handling 
+    //in-game objects.
     template<typename T>
     inline void centerOrigin(T& object)
     {
         object.setOrigin(object.getGlobalBounds().width / 2.0f, object.getGlobalBounds().height / 2.0f);
     }
 
-    static void encrypt(std::string& str)
+    /*
+    \brief Encrypt a given std::string
+    \params std::string
+    \returns void
+    */
+    void encrypt(std::string& str)
     {
         srand(time(NULL));
         int seed = rand() % 4294967295;
@@ -46,7 +57,12 @@ namespace ren
         str = std::to_string(seed) + "." + str;
     }
 
-    static void decrypt(std::string& str)
+    /*
+    \brief Decrypt a given std::string
+    \params std::string
+    \returns void
+    */
+    void decrypt(std::string& str)
     {
         int seed = 0;
         int random = 0;
