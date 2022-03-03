@@ -1,7 +1,7 @@
 #pragma once
-#include<Rengine/core/State.hpp>
+#include<Rengine/Core/State.hpp>
 
-class TestState: public State
+class TestState: public ren::State
 {
 public:
 	TestState();
@@ -13,8 +13,18 @@ public:
 	void draw(sf::RenderTarget& renderer) override;
 
 private:
-	sf::RectangleShape box;
+	sf::Sprite logo;
+	sf::Texture tex;
+	sf::Shader blur;
 
 	sf::Clock delayClock;
+
+	sf::Font font;
+	sf::Text text;
+
+	float delayperjerk, timer, blurval, setblur;
+	bool dir;
+
+	float sigma, bsize;
 };
 

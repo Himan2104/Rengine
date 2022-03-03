@@ -92,6 +92,10 @@
   <ItemGroup>
     <ClInclude Include="TestState.hpp" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="assets\shaders\blur.glsl" />
+    <None Include="assets\shaders\gaussian.glsl" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

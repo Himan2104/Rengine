@@ -16,7 +16,7 @@ ren::StateMachine* ren::StateMachine::access()
 	return &SM;
 }
 
-void ren::StateMachine::changeState(State* newState)
+void ren::StateMachine::changeState(ren::State* newState)
 {
 	State* temp = current_state;
 	current_state = newState;
@@ -24,7 +24,7 @@ void ren::StateMachine::changeState(State* newState)
 	delete[] temp;
 }
 
-State* &ren::StateMachine::getActiveState()
+ren::State* &ren::StateMachine::getActiveState()
 {
 	return current_state;
 }

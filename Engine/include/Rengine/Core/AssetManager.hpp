@@ -27,7 +27,7 @@ namespace ren
 		sf::SoundBuffer& getSFX(std::string name);
 		std::string& getMusic(std::string name);
 
-
+		
 	private:
 		std::map<std::string, sf::Texture> textures;
 		std::map<std::string, sf::Font> fonts;

@@ -8,83 +8,52 @@
 #include<vector>
 #include<functional>
 #include<SFML/Graphics.hpp>
+#include"Rengine/Config.hpp"
 
 namespace ren
 {
-    /*
-    \brief Get the current date+time as a string
-    \param Time format as a string/const char*
-    \see  Format String for std::put_time
-    The default format is [YYYY-MM-DD|HH:MM:SS]
-    */
-    std::string getCurrentTime(const char* format = "[%Y-%m-%d|%X]")
-    {
-        auto now = std::chrono::system_clock::now();
-        auto in_time_t = std::chrono::system_clock::to_time_t(now);
-        struct tm timeinfo;
-        localtime_s(&timeinfo, &in_time_t);
-        std::stringstream ss;
-        ss << std::put_time(&timeinfo, format);
-        return ss.str();
-    }
+    
 
-    /*
-    \brief Center the origin of any object that derives from sf::Transformable*/
+    /// <summary>
+    /// Get the current date and time as a string
+    /// </summary>
+    /// <param name="format"> Format string, default is [YYYY-MM-DD|HH:MM:SS]</param>
+    /// <returns>String of current date and time as the specified format</returns>
+    REN_API std::string getCurrentTime(const char* format = "[%Y-%m-%d|%X]");
+    
+
     //TODO: Get rid of the template. Very unsafe. Using this approach since
     //getGlobalBounds is defined differently in sf::Shape and sf::Sprite separately.
-    //This will however be fixed inevidently when I create my own ECS for handling 
-    //in-game objects.
+    //This will however be fixed inevitably when I create my own ECS for handling 
+    //in-game objects or as it states Entities :)
+
+    /// <summary>
+    /// Set the origin/pivot of the object to the center
+    /// </summary>
+    /// <typeparam name="T">Shape or Sprite</typeparam>
+    /// <param name="object">Object with shape/sprite</param>
     template<typename T>
     inline void centerOrigin(T& object)
     {
         object.setOrigin(object.getGlobalBounds().width / 2.0f, object.getGlobalBounds().height / 2.0f);
     }
 
-    /*
-    \brief Encrypt a given std::string
-    \params std::string
-    \returns void
-    */
-    void encrypt(std::string& str)
+    /// <summary>
+    /// Encrypts a given string
+    /// </summary>
+    REN_API void encrypt(std::string& str);
+
+    /// <summary>
+    /// Decrypt a string which was encrypted by ren::encrypt()
+    /// </summary>
+    REN_API void decrypt(std::string& str);
+
+    /// <summary>
+    /// Returns the current engine verision as a string
+    /// </summary>
+    /// <returns>std::string</returns>
+    REN_API inline std::string getEngineVersion()
     {
-        srand(time(NULL));
-        int seed = rand() % 4294967295;
-        srand(seed);
-        int random = rand() % 2147483647;
-        for (int i = 0; i < str.length(); i++)
-            str[i] = int(str[i]) + random;
-
-        str = std::to_string(seed) + "." + str;
+        return std::string(std::to_string(REN_VERSION_MAJOR) + "." + std::to_string(REN_VERSION_MINOR) + "." + std::to_string(REN_VERSION_PATCH) + "." + std::to_string(REN_VERSION_INTERNAL));
     }
-
-    /*
-    \brief Decrypt a given std::string
-    \params std::string
-    \returns void
-    */
-    void decrypt(std::string& str)
-    {
-        int seed = 0;
-        int random = 0;
-        bool flag = false;
-        std::string sub = "";
-        for (int i = 0; i < str.length(); i++)
-        {
-            if (!flag)
-            {
-                if (str[i] == '.')
-                {
-                    std::string temp = "";
-                    for (int j = 0; j < i; j++) temp += str[j];
-                    seed = std::stoi(temp);
-                    srand(seed);
-                    random = rand() % 2147483647;
-                    flag = true;
-                }
-            }
-            else sub += int(str[i]) - random;
-        }
-        str = sub;
-    }
-
 }

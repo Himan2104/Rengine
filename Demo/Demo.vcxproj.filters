@@ -27,4 +27,8 @@
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="assets\shaders\blur.glsl" />
+    <None Include="assets\shaders\gaussian.glsl" />
+  </ItemGroup>
 </Project>

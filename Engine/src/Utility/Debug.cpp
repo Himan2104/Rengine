@@ -1,16 +1,10 @@
 #include"Rengine/Utility/Debug.hpp"
 
-/*
-\brief Log something on the console
-*/
 void ren::Debug::log()
 {
     std::cout << ren::getCurrentTime() << " INFO : " << "Empty Log function called! If enabled, it won't be logged in the logfile." << std::endl;
 }
 
-/*
-\brief Log something on the console
-*/
 void ren::Debug::log(std::string message, MessageType m_type) 
 {
     std::string type;
