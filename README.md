@@ -1,7 +1,7 @@
 # Rengine
 SFML based 2D game framework [WIP]
 
-v0.1.0
+v0.1.1
 ***
 ### What is it?
 Rengine is 2D video game development framework based on [SFML](https://sfml-dev.org). It is made to be crossplatform though I might ocassionally mess up and write some platform specific code. Create an issue if that's the case. Currently it does not have any editor functionality, consequently, everything needs to be done by code. A tutorial will be soon (or might never be) added to get you started. This project was supposed to be my final year submission for Bachelor's and was initially made for a game I was working on in my 2nd Year. 
