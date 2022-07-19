@@ -1,3 +1,6 @@
+Repo is now a junk. All the code has been rewritten and new repo will soon be available.
+The last commit was just to dump all the stuff from my local machine to the server.
+
 # Rengine
 SFML based 2D game framework [WIP]
 
