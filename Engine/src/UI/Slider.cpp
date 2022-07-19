@@ -1,10 +1,6 @@
-#include "Slider.hpp"
+#include "Rengine/ui/Slider.hpp"
 
-renui::Slider::Slider()
-{
-}
-
-renui::Slider::Slider(std::pair<float, float> range) : range(range)
+ren::ui::Slider::Slider(std::pair<float, float> range) : range(range)
 {
 	path.setSize({ this->range.second * 5.0f, 2.0f });
 	knob.setSize({ 10.0f, 10.0f });
@@ -16,21 +12,22 @@ renui::Slider::Slider(std::pair<float, float> range) : range(range)
 	currentValue = (knob.getPosition().x - path.getPosition().x) / 5.0f;
 }
 
-renui::Slider::~Slider()
+ren::ui::Slider::~Slider()
 {
 }
 
-void renui::Slider::setColor(sf::Color color)
+void ren::ui::Slider::setColor(sf::Color color)
 {
 	path.setFillColor(sf::Color(color.r, color.g, color.b, 100));
 	knob.setFillColor(color);
 }
 
-void renui::Slider::EventHandler(sf::Event e, const sf::RenderWindow& window)
+void ren::ui::Slider::EventHandler(sf::Event e, const sf::RenderWindow& window)
 {
 	currentValue = (knob.getPosition().x - path.getPosition().x) / 5.0f;
 
-	if (knob.getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition(window))) && sf::Mouse::isButtonPressed(sf::Mouse::Left))
+	if (knob.getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition(window))) && 
+		sf::Mouse::isButtonPressed(sf::Mouse::Left))
 		isActive = true;
 	else if (e.type == sf::Event::MouseButtonReleased)
 		isActive = false;
@@ -44,30 +41,30 @@ void renui::Slider::EventHandler(sf::Event e, const sf::RenderWindow& window)
 	}
 }
 
-void renui::Slider::setPosition(const sf::Vector2f& pos)
+void ren::ui::Slider::setPosition(const sf::Vector2f& pos)
 {
 	path.setPosition(pos);
 	adjustKnob();
 }
 
-float renui::Slider::getCurrentValue()
+float ren::ui::Slider::getCurrentValue()
 {
 	return currentValue;
 }
 
-sf::Vector2f renui::Slider::getSize() const
+sf::Vector2f ren::ui::Slider::getSize() const
 {
 	return path.getSize();
 }
 
-void renui::Slider::render(sf::RenderTarget& renderTarget)
+void ren::ui::Slider::render(sf::RenderTarget& renderTarget)
 {
 	renderTarget.draw(path);
 	renderTarget.draw(knob);
 
 }
 
-void renui::Slider::adjustKnob()
+void ren::ui::Slider::adjustKnob()
 {
 	knob.setPosition(path.getPosition().x + 1.0f, path.getPosition().y - knob.getSize().y/2.0f);
 }

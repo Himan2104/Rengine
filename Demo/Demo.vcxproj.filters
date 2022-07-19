@@ -29,6 +29,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="assets\shaders\blur.glsl" />
-    <None Include="assets\shaders\gaussian.glsl" />
+    <None Include="assets\shaders\gaussian_vert.glsl" />
+    <None Include="assets\shaders\gaussian_frag.glsl" />
+    <None Include="assets\shaders\hbloom.glsl" />
+    <None Include="assets\shaders\vbloom.glsl" />
   </ItemGroup>
 </Project>

@@ -8,18 +8,19 @@
 
 namespace ren
 {
+	class State;
+	class Environment;
+	
 	class REN_API StateMachine : sf::NonCopyable
 	{
 	public:
 		StateMachine();
 		~StateMachine();
 
-		static StateMachine* access();
-
 		void changeState(State* newState);
-		State*& getActiveState();
+		State* getActiveState();
 
 	private:
-		State* current_state;
+		State* _current_state;
 	};
 }

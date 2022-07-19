@@ -7,19 +7,23 @@
 
 namespace ren
 {
+	class Event;
+	
 	namespace ui
 	{
 		class Button : public guibase
 		{
 		public:
 			//Ctor : Takes a font, size of the button and text to be displayed on the Button 
-			Button(sf::Font& font, sf::Vector2f size = sf::Vector2f(256.0f, 64.0f), std::string ButtonText = "NewButton");
+			Button(sf::Font& font, 
+				sf::Vector2f size = sf::Vector2f(256.0f, 64.0f),
+				std::string ButtonText = "NewButton");
 
 			//Edit styling options for the text on the button (Bold, Italic, etc.)
 			void setTextStyle(sf::Uint32 style);
 
 			//check if clicked
-			bool isClicked(const sf::RenderWindow& window);
+			Event onClick(const sf::RenderWindow& window);
 
 			//Set the Color of the Button and the Text
 			void setColor(sf::Color BoxColor, sf::Color TextColor);

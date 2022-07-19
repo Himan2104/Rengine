@@ -11,28 +11,24 @@ namespace ren
 		AssetManager();
 		~AssetManager();
 
-		static AssetManager* access();
-
 		void loadGlobalAssets();
 
-		void loadTexture(std::string name, std::string filepath);
-		void loadFont(std::string name, std::string filepath);
-		void loadSFX(std::string name, std::string filepath);
-		void loadMusic(std::string name, std::string filepath);
+		void loadTexture(std::string_view name, std::string filepath);
+		void loadFont(std::string_view name, std::string filepath);
+		void loadSFX(std::string_view name, std::string filepath);
+		void loadMusic(std::string_view name, std::string filepath);
 
-
-
-		sf::Texture& getTexture(std::string name);
-		sf::Font& getFont(std::string name);
-		sf::SoundBuffer& getSFX(std::string name);
-		std::string& getMusic(std::string name);
+		sf::Texture& getTexture(std::string_view name);
+		sf::Font& getFont(std::string_view name);
+		sf::SoundBuffer& getSFX(std::string_view name);
+		std::string& getMusic(std::string_view name);
 
 		
 	private:
-		std::map<std::string, sf::Texture> textures;
-		std::map<std::string, sf::Font> fonts;
-		std::map<std::string, sf::SoundBuffer> sfx;
-		std::map<std::string, std::string> music;
+		std::map<std::string, sf::Texture> _textures;
+		std::map<std::string, sf::Font> _fonts;
+		std::map<std::string, sf::SoundBuffer> _sfx;
+		std::map<std::string, std::string> _music;
 
 	};
 }

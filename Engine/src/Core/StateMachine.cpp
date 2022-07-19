@@ -1,30 +1,24 @@
 #include"Rengine/core/StateMachine.hpp"
 #include<iostream>
 
-ren::StateMachine::StateMachine()
+ren::StateMachine::StateMachine():
+	_current_state(nullptr)
 {
-	current_state = nullptr;
 }
 
 ren::StateMachine::~StateMachine()
 {
 }
 
-ren::StateMachine* ren::StateMachine::access()
-{
-	static StateMachine SM;
-	return &SM;
-}
-
 void ren::StateMachine::changeState(ren::State* newState)
 {
-	State* temp = current_state;
-	current_state = newState;
-	current_state->initialize();
+	State* temp = _current_state;
+	_current_state = newState;
+	_current_state->initialize();
 	delete[] temp;
 }
 
-ren::State* &ren::StateMachine::getActiveState()
+ren::State* ren::StateMachine::getActiveState()
 {
-	return current_state;
+	return _current_state;
 }

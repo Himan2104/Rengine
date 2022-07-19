@@ -4,7 +4,7 @@
 class TestState: public ren::State
 {
 public:
-	TestState();
+	TestState(ren::Environment* env);
 	~TestState();
 
 	void initialize() override;
@@ -15,16 +15,14 @@ public:
 private:
 	sf::Sprite logo;
 	sf::Texture tex;
-	sf::Shader blur;
+	sf::Shader hbloom, vbloom;
 
 	sf::Clock delayClock;
 
 	sf::Font font;
 	sf::Text text;
 
-	float delayperjerk, timer, blurval, setblur;
 	bool dir;
 
-	float sigma, bsize;
 };
 

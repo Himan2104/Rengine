@@ -21,13 +21,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -88,23 +88,45 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Core\Console.cpp" />
+    <ClCompile Include="src\Core\Environment.cpp" />
+    <ClCompile Include="src\ECS\Component.cpp" />
+    <ClCompile Include="src\ECS\Entity.cpp" />
     <ClCompile Include="src\core\AssetManager.cpp" />
     <ClCompile Include="src\core\MainApplication.cpp" />
     <ClCompile Include="src\core\State.cpp" />
     <ClCompile Include="src\core\StateMachine.cpp" />
+    <ClCompile Include="src\ECS\EntityManager.cpp" />
+    <ClCompile Include="src\UI\Button.cpp" />
+    <ClCompile Include="src\UI\CheckBox.cpp" />
+    <ClCompile Include="src\UI\guibase.cpp" />
+    <ClCompile Include="src\UI\Slider.cpp" />
+    <ClCompile Include="src\UI\TextBox.cpp" />
     <ClCompile Include="src\utility\Debug.cpp" />
     <ClCompile Include="src\utility\TimeKeeper.cpp" />
     <ClCompile Include="src\utility\Misc.cpp" />
+    <ClCompile Include="src\ECS\System.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\Rengine\Core\Console.hpp" />
+    <ClInclude Include="include\Rengine\Core\Environment.hpp" />
+    <ClInclude Include="include\Rengine\ECS\Component.hpp" />
+    <ClInclude Include="include\Rengine\ECS\EnitityManager.hpp" />
+    <ClInclude Include="include\Rengine\ECS\Entity.hpp" />
     <ClInclude Include="include\Rengine\core\AssetManager.hpp" />
     <ClInclude Include="include\Rengine\core\MainApplication.hpp" />
     <ClInclude Include="include\Rengine\core\State.hpp" />
     <ClInclude Include="include\Rengine\core\StateMachine.hpp" />
+    <ClInclude Include="include\Rengine\UI\Button.hpp" />
+    <ClInclude Include="include\Rengine\UI\CheckBox.hpp" />
+    <ClInclude Include="include\Rengine\UI\guibase.hpp" />
+    <ClInclude Include="include\Rengine\UI\Slider.hpp" />
+    <ClInclude Include="include\Rengine\UI\TextBox.hpp" />
     <ClInclude Include="include\Rengine\utility\Debug.hpp" />
     <ClInclude Include="include\Rengine\utility\TimeKeeper.hpp" />
     <ClInclude Include="include\Rengine\utility\Misc.hpp" />
     <ClInclude Include="include\Rengine\Config.hpp" />
+    <ClInclude Include="include\Rengine\ECS\System.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

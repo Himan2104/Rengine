@@ -10,12 +10,6 @@ ren::AssetManager::~AssetManager()
 {
 }
 
-ren::AssetManager* ren::AssetManager::access()
-{
-	static AssetManager assMan;
-	return &assMan;
-}
-
 void ren::AssetManager::loadGlobalAssets()
 {
 	//fonts
@@ -42,56 +36,56 @@ void ren::AssetManager::loadGlobalAssets()
 	
 }
 
-void ren::AssetManager::loadTexture(std::string name, std::string filepath)
+void ren::AssetManager::loadTexture(std::string_view name, std::string filepath)
 {
 	sf::Texture temp;
-	if (!temp.loadFromFile(filepath)) std::cout << name + " failed to load" << std::endl;
-	else textures.insert(std::make_pair(name, temp));
+	if (!temp.loadFromFile(filepath)) std::cout << name << " failed to load" << std::endl;
+	else _textures.insert(std::make_pair(name, temp));
 }
 
-void ren::AssetManager::loadFont(std::string name, std::string filepath)
+void ren::AssetManager::loadFont(std::string_view name, std::string filepath)
 {
 	sf::Font temp;
-	if (!temp.loadFromFile(filepath)) std::cout << name + " failed to load" << std::endl;
-	else fonts.insert(std::make_pair(name, temp));
+	if (!temp.loadFromFile(filepath)) std::cout << name << " failed to load" << std::endl;
+	else _fonts.insert(std::make_pair(name, temp));
 }
 
-void ren::AssetManager::loadSFX(std::string name, std::string filepath)
+void ren::AssetManager::loadSFX(std::string_view name, std::string filepath)
 {
 	sf::SoundBuffer temp;
-	if (!temp.loadFromFile(filepath)) std::cout << name + " failed to load" << std::endl;
-	else sfx.insert(std::make_pair(name, temp));
+	if (!temp.loadFromFile(filepath)) std::cout << name << " failed to load" << std::endl;
+	else _sfx.insert(std::make_pair(name, temp));
 }
 
-void ren::AssetManager::loadMusic(std::string name, std::string filepath)
+void ren::AssetManager::loadMusic(std::string_view name, std::string filepath)
 {
-	music.insert(std::make_pair(name, filepath));
+	_music.insert(std::make_pair(name, filepath));
 }
 
 
 
-sf::Texture& ren::AssetManager::getTexture(std::string name)
+sf::Texture& ren::AssetManager::getTexture(std::string_view name)
 {
-	if (textures.count(name)) return textures.at(name);
-	else return textures.at("texture_not_found");
+	if (_textures.count(name.data())) return _textures.at(name.data());
+	else return _textures.at("texture_not_found");
 }
 
-sf::Font& ren::AssetManager::getFont(std::string name)
+sf::Font& ren::AssetManager::getFont(std::string_view name)
 {
-	if (fonts.count(name)) return fonts.at(name);
-	else return fonts.at("default_font");
+	if (_fonts.count(name.data())) return _fonts.at(name.data());
+	else return _fonts.at("default_font");
 }
 
-sf::SoundBuffer& ren::AssetManager::getSFX(std::string name)
+sf::SoundBuffer& ren::AssetManager::getSFX(std::string_view name)
 {
-	if (sfx.count(name)) return sfx.at(name);
-	else return sfx.at("sfx_not_found");
+	if (_sfx.count(name.data())) return _sfx.at(name.data());
+	else return _sfx.at("sfx_not_found");
 }
 
-std::string& ren::AssetManager::getMusic(std::string name)
+std::string& ren::AssetManager::getMusic(std::string_view name)
 {
-	if (music.count(name)) return music.at(name);
-	else return music.at("music_not_found");
+	if (_music.count(name.data())) return _music.at(name.data());
+	else return _music.at("music_not_found");
 }
 
 
