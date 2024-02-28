@@ -5,7 +5,7 @@
 
 namespace ren::ecs
 {
-	class EntityManager
+	class REN_API EntityManager
 	{
 	public:
 		EntityManager();

@@ -1,14 +1,6 @@
 #pragma once
-#include<iostream>
-#include<chrono>
-#include<sstream>
-#include<time.h>
-#include<string>
-#include<iomanip>
-#include<vector>
-#include<functional>
-#include<SFML/Graphics.hpp>
 #include"Rengine/Config.hpp"
+#include<string>
 
 namespace ren
 {
@@ -19,7 +11,7 @@ namespace ren
     /// </summary>
     /// <param name="format"> Format string, default is [YYYY-MM-DD|HH:MM:SS]</param>
     /// <returns>String of current date and time as the specified format</returns>
-    REN_API std::string getCurrentTime(const char* format = "[%Y-%m-%d|%X]");
+    REN_API std::string GetCurrentTime(const char* format = "[%Y-%m-%d|%X]");
     
 
     //TODO: Get rid of the template. Very unsafe. Using this approach since
@@ -33,7 +25,7 @@ namespace ren
     /// <typeparam name="T">Shape or Sprite</typeparam>
     /// <param name="object">Object with shape/sprite</param>
     template<typename T>
-    inline void centerOrigin(T& object)
+    inline void CenterOrigin(T& object)
     {
         object.setOrigin(object.getGlobalBounds().width / 2.0f, object.getGlobalBounds().height / 2.0f);
     }
@@ -41,18 +33,18 @@ namespace ren
     /// <summary>
     /// Encrypts a given string
     /// </summary>
-    REN_API void encrypt(std::string& str);
+    REN_API void Encrypt(std::string& str);
 
     /// <summary>
-    /// Decrypt a string which was encrypted by ren::encrypt()
+    /// Decrypt a string which was encrypted by ren::Encrypt()
     /// </summary>
-    REN_API void decrypt(std::string& str);
+    REN_API void Decrypt(std::string& str);
 
     /// <summary>
     /// Returns the current engine verision as a string
     /// </summary>
     /// <returns>std::string</returns>
-    REN_API inline std::string getEngineVersion()
+    REN_API inline std::string GetEngineVersion()
     {
         return std::string(std::to_string(REN_VERSION_MAJOR) + "." + std::to_string(REN_VERSION_MINOR) + "." + std::to_string(REN_VERSION_PATCH) + "." + std::to_string(REN_VERSION_INTERNAL));
     }

@@ -1,8 +1,13 @@
 #include"Rengine/Utility/Misc.hpp"
+#include<chrono>
+#include<sstream>
+#include<iomanip>
+#include<vector>
+#include<functional>
 
 namespace ren
 {
-    std::string getCurrentTime(const char* format)
+    std::string GetCurrentTime(const char* format)
     {
         auto now = std::chrono::system_clock::now();
         auto in_time_t = std::chrono::system_clock::to_time_t(now);
@@ -13,7 +18,7 @@ namespace ren
         return ss.str();
     }
 
-    void encrypt(std::string& str)
+    void Encrypt(std::string& str)
     {
         srand(time(NULL));
         int seed = rand() % 4294967295;
@@ -25,7 +30,7 @@ namespace ren
         str = std::to_string(seed) + "." + str;
     }
 
-    void decrypt(std::string& str)
+    void Decrypt(std::string& str)
     {
         int seed = 0;
         int random = 0;

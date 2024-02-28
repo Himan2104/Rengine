@@ -6,9 +6,9 @@
 
 namespace ren::ecs
 {
-	class Component;
+	class REN_API Component;
 
-	class System
+	class REN_API System
 	{
 	public:
 		System();

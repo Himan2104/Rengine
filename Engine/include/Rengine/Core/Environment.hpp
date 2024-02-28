@@ -14,14 +14,24 @@ namespace ren
 		Environment();
 		~Environment();
 
-		std::unique_ptr<AssetManager> assetManager;
-		std::unique_ptr<StateMachine> stateMachine;
+		std::shared_ptr<AssetManager> GetAssetManager() const
+		{
+			return _asset_manager;
+		}
+
+		std::shared_ptr<StateMachine> GetStateMachine() const
+		{
+			return _state_machine;
+		}
 
 		void Dispose();
 
 	private:
-		Environment(const Environment&);
-		Environment& operator=(const Environment&);
+		Environment(const Environment&) = delete;
+		Environment& operator=(const Environment&) = delete;
+
+		std::shared_ptr<AssetManager> _asset_manager;
+		std::shared_ptr<StateMachine> _state_machine;
 
 	};
 }

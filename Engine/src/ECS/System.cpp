@@ -1,6 +1,6 @@
 #include "Rengine/ECS/System.hpp"
 
-constexpr ren::ecs::System::System():
+ren::ecs::System::System():
 	_identifier("unknown_system"),
 	_tick_rate(0)
 {

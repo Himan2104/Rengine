@@ -1,6 +1,6 @@
 #include "Rengine/core/State.hpp"
 
-constexpr ren::State::State(ren::Environment* environment)
+ren::State::State(std::weak_ptr<ren::Environment> environment)
 {
-	this->gEnv = environment;
+	this->_global_env = environment;
 }

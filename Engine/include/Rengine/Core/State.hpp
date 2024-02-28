@@ -8,18 +8,18 @@
 
 namespace ren
 {
-	class Environment;
+	class REN_API Environment;
 	class REN_API State
 	{
 	public:
-		constexpr State(ren::Environment* environment);
+		State(std::weak_ptr<ren::Environment> environment);
 		virtual ~State() {}
-		virtual void initialize() = 0;
-		virtual void eventHandler(sf::Event& event, const sf::RenderWindow& window) = 0;
-		virtual void update(float delTime) = 0;
-		virtual void draw(sf::RenderTarget& target) = 0;
+		virtual void Initialize() = 0;
+		virtual void EventHandler(sf::Event& event, const sf::RenderWindow& window) = 0;
+		virtual void Update(float delTime) = 0;
+		virtual void Render(sf::RenderTarget& target) = 0;
 
 	protected:
-		Environment* gEnv;
+		std::weak_ptr<ren::Environment> _global_env;
 	};
 }

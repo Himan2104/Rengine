@@ -2,7 +2,7 @@
 #include<Rengine/Utility/Misc.hpp>
 #include<Rengine/Utility/Debug.hpp>
 
-TestState::TestState(ren::Environment* env)
+TestState::TestState(std::weak_ptr<ren::Environment> env)
 	:State(env)
 {
 }
@@ -11,24 +11,25 @@ TestState::~TestState()
 {
 }
 
-void TestState::initialize()
+void TestState::Initialize()
 {
 	ren::Debug::log("TestState Loaded!");
-	tex.loadFromFile("assets/light.png");
+	tex.loadFromFile("assets/rengine.png");
 	logo.setTexture(tex);
 
-	ren::centerOrigin(logo);
+	ren::CenterOrigin(logo);
 	logo.setPosition(960, 500);
 	delayClock.restart().asSeconds();
 
 	font.loadFromFile("C:/Windows/Fonts/consola.ttf");
 	text.setFont(font);
-	text.setString("RENGINE [v" + ren::getEngineVersion() + "]");
+	text.setString("RENGINE [v" + ren::GetEngineVersion() + "]");
 	text.setCharacterSize(15.0f);
-	ren::centerOrigin(text);
+	ren::CenterOrigin(text);
 	text.setPosition(960, 800);
 
-
+	blur.loadFromFile("assets/shaders/blur.glsl", sf::Shader::Fragment);
+	
 	hbloom.loadFromFile("assets/shaders/hbloom.glsl", sf::Shader::Fragment /*"assets/shaders/gaussian_frag.glsl"*/);
 	vbloom.loadFromFile("assets/shaders/vbloom.glsl", sf::Shader::Fragment /*"assets/shaders/gaussian_frag.glsl"*/);
 
@@ -41,64 +42,32 @@ void TestState::initialize()
 	vbloom.setUniform("sigma", 4.0f);
 	vbloom.setUniform("glowMultiplier", 10.0f);
 	vbloom.setUniform("height", 100.0f);
-	
+
+	blur.setUniform("texture", sf::Shader::CurrentTexture);
+	br = 0.001f;
+	blur.setUniform("blur_radius", br);
 }
 
-void TestState::eventHandler(sf::Event& event, const sf::RenderWindow& window)
+void TestState::EventHandler(sf::Event& event, const sf::RenderWindow& window)
 {
 	if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Space) dir = !dir;
+	
 }
 
-void TestState::update(float delTime)
+void TestState::Update(float delTime)
 {	
-	//logo.rotate(sigma);
-	//blur.setUniform("blur_radius", blurval);
-	/*blur.setUniform("sigma", sigma);
-	blur.setUniform("blurSize", bsize);*/
-	
-
-	/*if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) sigma += 1.0f;
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) sigma -= 1.0f;
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) bsize += 0.1f;
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) bsize -= 0.1f;*/
-
-	
-
-	/*if (blurval <= 0.0f && !dir)
-	{
-		if (timer > delayperjerk)
-		{
-			timer = 0.0f;
-			delayperjerk = float(rand() % 50 + 25) / 100.0f;
-			setblur = float(rand() % 100 + 50) / 1000.0f;
-			dir = true;
-			sigma = -sigma;
-		}
-		timer += delTime;
-	}
-	else if (blurval >= setblur && dir)
-	{
-		if (timer > delayperjerk / 2.0f)
-		{
-			timer = 0.0f;
-			dir = false;
-			sigma = -sigma;
-		}
-		timer += delTime;
-	}
-	else
-	{
-		blurval = dir ? blurval += 0.1f * delTime : blurval -= 0.1f * delTime;
-	}*/
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) br -= 0.001f;
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) br += 0.001f;
+	blur.setUniform("blur_radius", br);
 }
 
-void TestState::draw(sf::RenderTarget& renderer)
+void TestState::Render(sf::RenderTarget& renderer)
 {
 	if (dir)
 	{
 		renderer.draw(logo, &hbloom);
 		renderer.draw(logo, &vbloom);
 	}
-	else renderer.draw(logo);
+	else renderer.draw(logo, &blur);
 	renderer.draw(text);
 }

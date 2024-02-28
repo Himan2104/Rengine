@@ -4,8 +4,8 @@
 
 ren::Environment::Environment()
 {
-	assetManager = std::make_unique<AssetManager>();
-	stateMachine = std::make_unique<StateMachine>();
+	_asset_manager = std::make_shared<AssetManager>();
+	_state_machine = std::make_shared<StateMachine>();
 }
 
 ren::Environment::~Environment()

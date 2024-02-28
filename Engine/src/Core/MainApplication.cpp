@@ -12,7 +12,7 @@ ren::MainApplication::MainApplication(ren::ApplicationProperties app_properties)
 
 	_environment = std::make_shared<Environment>();
 
-	_environment->assetManager->loadGlobalAssets();
+	_environment->GetAssetManager()->loadGlobalAssets();
 }
 
 
@@ -21,35 +21,35 @@ ren::MainApplication::~MainApplication()
 	_environment->Dispose();
 }
 
-void ren::MainApplication::run(State* firstState)
+void ren::MainApplication::Run(State* firstState)
 {
-	_environment->stateMachine->changeState(firstState);
-	TimeKeeper::initializeTime();
+	_environment->GetStateMachine()->ChangeState(firstState);
+	TimeKeeper::InitializeTime();
 	
 	while (_window.isOpen())
 	{
-		TimeKeeper::updateTime();
+		TimeKeeper::UpdateTime();
 
 		sf::Event event;
 		while (_window.pollEvent(event))
 		{
 			if (event.type == sf::Event::Closed) _window.close();
-			_environment->stateMachine->getActiveState()->eventHandler(event, _window);
+			_environment->GetStateMachine()->GetActiveState()->EventHandler(event, _window);
 			if (event.type == sf::Event::KeyPressed)
 				if (event.key.code == sf::Keyboard::Tilde)
 					Debug::log("OpenConsole");
 		}
 
-		_environment->stateMachine->getActiveState()->update(TimeKeeper::deltaTime());
+		_environment->GetStateMachine()->GetActiveState()->Update(TimeKeeper::DeltaTime());
 
 		_window.clear();
-		_environment->stateMachine->getActiveState()->draw(_window);
+		_environment->GetStateMachine()->GetActiveState()->Render(_window);
 	
 		_window.display();
 	}
 }
 
-void ren::MainApplication::closeApplication()
+void ren::MainApplication::CloseApplication()
 {
 	_window.close();
 }

@@ -4,7 +4,7 @@
 
 int main()
 {
-	ren::Settings stgns
+	ren::Settings _settings
 	{
 		sf::VideoMode(1920,1080,32), //videomode
 		144, //framerate limit
@@ -12,15 +12,15 @@ int main()
 		false //vsync
 	};
 	
-	ren::ApplicationProperties rop
+	ren::ApplicationProperties _application_properties
 	{
 		"Rengine Demo", //App name
-		stgns
+		0u, 1u, 1u, _settings
 	};
-	ren::MainApplication* Application = new ren::MainApplication(rop);
+	ren::MainApplication* _application = new ren::MainApplication(_application_properties);
 
-	Application->run(new TestState(Application->environment()));
+	_application->Run(new TestState(_application->gEnv));
 
-	delete Application;
+	delete _application;
 	return 0;
 }

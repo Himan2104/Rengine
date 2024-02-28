@@ -9,11 +9,12 @@
 
 namespace ren::ecs
 {
-	class Component;
+	class REN_API Component;
 
 	class REN_API Entity
 	{
 	public:
+		Entity();
 		Entity(uint_fast64_t instanceID);
 		~Entity();
 		

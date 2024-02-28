@@ -43,7 +43,7 @@ namespace ren
 		/// Start Application from firstState (arg)
 		/// </summary>
 		/// <param name="firstState">First state to init the state machine with</param>
-		void run(State* firstState);
+		void Run(State* firstState);
 
 		/// <summary>
 		/// Get the global api environment 
@@ -51,7 +51,7 @@ namespace ren
 		/// <returns>weak pointer to current application instance's environment</returns>
 		std::weak_ptr<Environment> gEnv; 
 
-		void closeApplication();
+		void CloseApplication();
 
 	private:
 		sf::VideoMode _video_mode;

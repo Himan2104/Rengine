@@ -17,8 +17,8 @@ namespace ren
 		StateMachine();
 		~StateMachine();
 
-		void changeState(State* newState);
-		State* getActiveState();
+		void ChangeState(State* newState);
+		State* GetActiveState();
 
 	private:
 		State* _current_state;

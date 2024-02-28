@@ -2,7 +2,7 @@
 
 void ren::Debug::log()
 {
-    std::cout << ren::getCurrentTime() << " INFO : " << "Empty Log function called! If enabled, it won't be logged in the logfile." << std::endl;
+    std::cout << ren::GetCurrentTime() << " INFO : " << "Empty Log function called! If enabled, it won't be logged in the logfile." << std::endl;
 }
 
 void ren::Debug::log(std::string message, MessageType m_type) 
@@ -26,6 +26,6 @@ void ren::Debug::log(std::string message, MessageType m_type)
         default: type = " UNKNOWN : ";
             break;
     }
-    std::cout << color << ren::getCurrentTime() << type << message << end << std::endl;
+    std::cout << color << ren::GetCurrentTime() << type << message << end << std::endl;
 }
 

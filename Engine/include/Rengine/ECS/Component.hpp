@@ -9,10 +9,10 @@
 
 namespace ren::ecs
 {
-	class System;
-	class Entity;
+	class REN_API System;
+	class REN_API Entity;
 
-	class Component
+	class REN_API Component
 	{
 	public:
 		Component(const std::string& identifier, std::shared_ptr<Entity> entity);
