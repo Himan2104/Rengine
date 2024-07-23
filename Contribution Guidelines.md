@@ -9,19 +9,23 @@ While contributing to this project please try to maintain a similar coding style
 
 Styling reference for class names
 ~~~C++
-class MyClass { }; 
+class MyClass 
+{
+    //contents
+}; 
 ~~~
 
 Styling reference for variables
 ~~~C++ 
 type _var_name; //for private vars [e.g. _animation_clip]
-type tVarName; //for public vars [e.g. bIsRunning]
+type 
+type varName; //for public vars [e.g. timeSinceEpoch]
+type tVarName; //this(hungarian notation) is ok too for public vars [e.g. bIsRunning]
 ~~~
 
 Styling reference for functions
 ~~~C++
-void MyFunc(params); //for public functions [e.g. StartAnimation()]
-void func_name(params); //for private functions [e.g. destroy_object()]
+void MyFunc(params); //pascal case for names and snake or camel for params[e.g. StartAnimation()]
 ~~~
 
 Code Sample
