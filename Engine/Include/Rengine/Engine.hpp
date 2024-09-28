@@ -9,7 +9,6 @@ namespace ren
     public:
         static int StartApplication()
         {
-            ;
         }
     private:
         Application _application;
