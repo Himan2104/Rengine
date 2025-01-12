@@ -7,8 +7,9 @@
 #include<vector>
 #include<typeindex>
 #include<functional>
+#include<pstl/glue_execution_defs.h>
 
-namespace ren
+namespace Ren
 {
     class IEvent
     {
@@ -35,6 +36,8 @@ namespace ren
         void Invoke(Args &&... args)
         {
             T event(std::forward<Args>(args)...);
+            auto& x = _subscribers[std::type_index(typeid(T))];
+            std::for_each(std::execution::par, x.begin(), x.end(), [&](auto &e) { e(event); });
         }
 
         template<IsEvent T>

@@ -2,14 +2,14 @@
 
 #include"Rengine/Config.hpp"
 
-namespace ren
+namespace Ren
 {
     struct SimulationParams
     {
 
     };
 
-    class REN_API Simulation final
+    class Simulation
     {
     public:
         Simulation();

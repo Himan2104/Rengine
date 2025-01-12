@@ -5,11 +5,11 @@
 #include <Rengine/Utility/TimeKeeper.hpp>
 #include <Rengine/Config.hpp>
 
-namespace ren
+namespace Ren
 {
-	class REN_API Level;
-	class REN_API Environment;
-	struct REN_API Settings
+	class Level;
+	class Environment;
+	struct Settings
 	{
 		sf::VideoMode video_mode;
 		int framerate_limit{};
@@ -18,7 +18,7 @@ namespace ren
 		bool postprocessing{};
 	};
 
-	struct REN_API ApplicationProperties
+	struct ApplicationProperties
 	{
 		std::string name{};
 		uint8_t version_major{};
@@ -32,10 +32,10 @@ namespace ren
         }
 	};
 
-	class REN_API Application
+	class Application
 	{
 	public:
-		explicit Application(ren::ApplicationProperties app_properties);
+		explicit Application(Ren::ApplicationProperties app_properties);
 		~Application();
 
 		/// <summary>

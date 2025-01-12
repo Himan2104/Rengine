@@ -2,8 +2,8 @@
 #include<Rengine/Utility/Misc.hpp>
 #include<Rengine/Utility/Debug.hpp>
 
-TestState::TestState(std::weak_ptr<ren::Environment> env)
-	: Level(env)
+TestState::TestState()
+	: Level()
 {
 }
 
@@ -13,19 +13,19 @@ TestState::~TestState()
 
 void TestState::Initialize()
 {
-	ren::Debug::log("TestState Loaded!");
+	Ren::Debug::log("TestState Loaded!");
 	tex.loadFromFile("assets/rengine.png");
 	logo.setTexture(tex);
 
-	ren::CenterOrigin(logo);
+	Ren::CenterOrigin(logo);
 	logo.setPosition(960, 500);
 	delayClock.restart().asSeconds();
 
 	font.loadFromFile("C:/Windows/Fonts/consola.ttf");
 	text.setFont(font);
-	text.setString("RENGINE [v" + ren::GetEngineVersion() + "]");
+	text.setString("RENGINE [v" + Ren::GetEngineVersion() + "]");
 	text.setCharacterSize(15.0f);
-	ren::CenterOrigin(text);
+	Ren::CenterOrigin(text);
 	text.setPosition(960, 800);
 
 	blur.loadFromFile("assets/shaders/blur.glsl", sf::Shader::Fragment);

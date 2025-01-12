@@ -1,6 +1,6 @@
 #include "Rengine/ui/CheckBox.hpp"
 
-ren::ui::CheckBox::CheckBox(sf::Font& font, std::string label, float scale)
+Ren::ui::CheckBox::CheckBox(sf::Font& font, std::string label, float scale)
 {
 	status = false;
 
@@ -26,41 +26,41 @@ ren::ui::CheckBox::CheckBox(sf::Font& font, std::string label, float scale)
 	tick.setRotation(45.0f);
 }
 
-ren::ui::CheckBox::~CheckBox()
+Ren::ui::CheckBox::~CheckBox()
 {
 }
 
-bool ren::ui::CheckBox::getStatus()
+bool Ren::ui::CheckBox::getStatus()
 {
 	return status;
 }
 
-void ren::ui::CheckBox::EventHandler(sf::Event e, const sf::RenderWindow& window)
+void Ren::ui::CheckBox::EventHandler(sf::Event e, const sf::RenderWindow& window)
 {
 	if (e.type == sf::Event::MouseButtonPressed)
 		if (box.getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition(window))))
 			status = !status;
 }
 
-void ren::ui::CheckBox::setPosition(const sf::Vector2f& pos)
+void Ren::ui::CheckBox::setPosition(const sf::Vector2f& pos)
 {
 	box.setPosition(pos);
 	adjustPositions();
 }
 
-sf::Vector2f ren::ui::CheckBox::getSize() const
+sf::Vector2f Ren::ui::CheckBox::getSize() const
 {
 	return box.getSize();
 }
 
-void ren::ui::CheckBox::render(sf::RenderTarget& renderTarget)
+void Ren::ui::CheckBox::render(sf::RenderTarget& renderTarget)
 {
 	renderTarget.draw(box);
 	if(status) renderTarget.draw(tick);
 	renderTarget.draw(label);
 }
 
-void ren::ui::CheckBox::adjustPositions()
+void Ren::ui::CheckBox::adjustPositions()
 {
 	label.setPosition(box.getPosition() + sf::Vector2f((box.getGlobalBounds().width + label.getGlobalBounds().width)/2.0f, -box.getGlobalBounds().width/4.0f));
 	tick.setPosition(box.getPosition() - sf::Vector2f(2.0f * scale, 2.0f * scale));

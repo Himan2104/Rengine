@@ -6,7 +6,7 @@
 #include<iostream>
 #include<stdlib.h>
 
-namespace ren::ui
+namespace Ren::ui
 {
 	class TextBox : public guibase
 	{

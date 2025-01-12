@@ -3,9 +3,9 @@
 #include<algorithm>
 #include"Rengine/ECS/Entity.hpp"
 
-namespace ren::ecs
+namespace Ren::ecs
 {
-	class REN_API EntityManager
+	class EntityManager
 	{
 	public:
 		EntityManager();

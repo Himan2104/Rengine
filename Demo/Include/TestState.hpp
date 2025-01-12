@@ -2,10 +2,10 @@
 #include<SFML/Graphics.hpp>
 #include<Rengine/Core/Level.hpp>
 
-class TestState: public ren::Level
+class TestState: public Ren::Level
 {
 public:
-	TestState(std::weak_ptr<ren::Environment> env);
+	TestState();
 	~TestState();
 
 	void Initialize() override;

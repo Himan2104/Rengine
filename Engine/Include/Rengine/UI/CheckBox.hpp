@@ -3,7 +3,7 @@
 #include<SFML/Graphics.hpp>
 #include"guibase.hpp"
 
-namespace ren
+namespace Ren
 {
 	namespace ui
 	{

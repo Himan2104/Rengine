@@ -1,11 +1,11 @@
 #include"Rengine/Utility/Debug.hpp"
 
-void ren::Debug::log()
+void Ren::Debug::log()
 {
-    std::cout << ren::GetCurrentTime() << " INFO : " << "Empty Log function called! If enabled, it won't be logged in the logfile." << std::endl;
+    std::cout << Ren::GetCurrentTime() << " INFO : " << "Empty Log function called! If enabled, it won't be logged in the logfile." << std::endl;
 }
 
-void ren::Debug::log(std::string message, MessageType m_type) 
+void Ren::Debug::log(std::string message, MessageType m_type) 
 {
     std::string type;
 
@@ -26,6 +26,6 @@ void ren::Debug::log(std::string message, MessageType m_type)
         default: type = " UNKNOWN : ";
             break;
     }
-    std::cout << color << ren::GetCurrentTime() << type << message << end << std::endl;
+    std::cout << color << Ren::GetCurrentTime() << type << message << end << std::endl;
 }
 

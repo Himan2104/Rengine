@@ -2,11 +2,11 @@
 #include<Rengine/Config.hpp>
 #include<Rengine/Core/EventSystem.hpp>
 
-namespace ren
+namespace Ren
 {
     namespace CommonHelpers
     {
-        EventSystem& REN_API GetEventSystem()
+        EventSystem& GetEventSystem()
         {
             return EventSystem::GetInstance();
         }

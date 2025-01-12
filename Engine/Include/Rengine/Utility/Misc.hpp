@@ -2,7 +2,7 @@
 #include"Rengine/Config.hpp"
 #include<string>
 
-namespace ren
+namespace Ren
 {
     
 
@@ -11,7 +11,7 @@ namespace ren
     /// </summary>
     /// <param name="format"> Format string, default is [YYYY-MM-DD|HH:MM:SS]</param>
     /// <returns>String of current date and time as the specified format</returns>
-    REN_API std::string GetCurrentTime(const char* format = "[%Y-%m-%d|%X]");
+    std::string GetCurrentTime(const char* format = "[%Y-%m-%d|%X]");
     
 
     //TODO: Get rid of the template. Very unsafe. Using this approach since
@@ -33,19 +33,19 @@ namespace ren
     /// <summary>
     /// Encrypts a given string
     /// </summary>
-    REN_API void Encrypt(std::string& str);
+    void Encrypt(std::string& str);
 
     /// <summary>
-    /// Decrypt a string which was encrypted by ren::Encrypt()
+    /// Decrypt a string which was encrypted by Ren::Encrypt()
     /// </summary>
-    REN_API void Decrypt(std::string& str);
+    void Decrypt(std::string& str);
 
     /// <summary>
     /// Returns the current engine verision as a string
     /// </summary>
     /// <returns>std::string</returns>
-    REN_API inline std::string GetEngineVersion()
+    inline std::string GetEngineVersion()
     {
-        return std::string(std::to_string(REN_VERSION_MAJOR) + "." + std::to_string(REN_VERSION_MINOR) + "." + std::to_string(REN_VERSION_PATCH) + "." + std::to_string(REN_VERSION_INTERNAL));
+        return std::string(std::to_string(REN_VERSION_MAJOR) + "." + std::to_string(REN_VERSION_MINOR) + "." + std::to_string(REN_VERSION_PATCH));
     }
 }

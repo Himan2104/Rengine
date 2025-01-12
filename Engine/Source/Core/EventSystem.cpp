@@ -1,15 +1,10 @@
 #include "Rengine/Core/EventSystem.hpp"
 
-namespace ren
+namespace Ren
 {
     EventSystem &EventSystem::GetInstance()
     {
         static EventSystem instance;
         return instance;
-    }
-
-    void IEvent::Invoke(const IEvent &event)
-    {
-
     }
 }

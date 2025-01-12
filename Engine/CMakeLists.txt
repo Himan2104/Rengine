@@ -1,4 +1,4 @@
-add_library(rengine-lib Source/Core/Application.cpp
+add_library(rengine Source/Core/Application.cpp
         Source/Core/AssetManager.cpp
         Source/Core/Console.cpp
         Source/Core/Level.cpp
@@ -18,9 +18,10 @@ add_library(rengine-lib Source/Core/Application.cpp
         Source/Core/Simulation.cpp
         Include/Rengine/Engine.hpp
         Source/Core/EventSystem.cpp
-        Include/Rengine/Utility/CommonHelpers.hpp)
+        Include/Rengine/Utility/CommonHelpers.hpp
+        Include/Rengine/Core/IApplication.hpp)
 
 
 set(RENGINE_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/Include)
-target_include_directories(rengine-lib PUBLIC ${RENGINE_INCLUDE_DIRS} ${SFML_INCLUDE_DIR})
-target_link_libraries(rengine-lib PRIVATE sfml-graphics sfml-audio sfml-network)
+target_include_directories(rengine PUBLIC ${RENGINE_INCLUDE_DIRS} ${SFML_INCLUDE_DIR})
+target_link_libraries(rengine PRIVATE sfml-graphics sfml-audio sfml-network)

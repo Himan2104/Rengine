@@ -10,9 +10,9 @@
 //a log file and update it regularly throughout the program's execution.
 //Stupid idea? Or have a better one? Let me know please.
 
-namespace ren
+namespace Ren
 {
-    class REN_API Debug
+    class Debug
     {
     public:
         enum class MessageType

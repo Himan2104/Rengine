@@ -7,11 +7,11 @@
 #include"Rengine/Config.hpp"
 #include"Rengine/ECS/Component.hpp"
 
-namespace ren::ecs
+namespace Ren::ecs
 {
-	class REN_API Component;
+	class Component;
 
-	class REN_API Entity
+	class Entity
 	{
 	public:
 		Entity();
@@ -32,7 +32,7 @@ namespace ren::ecs
 	private:
 		uint_fast64_t _instance_id;
 		State _state;
-		std::vector<std::shared_ptr<ren::ecs::Component>> _components;
+		std::vector<std::shared_ptr<Ren::ecs::Component>> _components;
 
 		friend class EntityManager;
 	};

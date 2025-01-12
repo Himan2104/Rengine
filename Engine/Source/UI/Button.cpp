@@ -1,6 +1,6 @@
 #include "Rengine/ui/Button.hpp"
 
-ren::ui::Button::Button(sf::Font& font, sf::Vector2f size, std::string ButtonText)
+Ren::ui::Button::Button(sf::Font& font, sf::Vector2f size, std::string ButtonText)
 { 
 	box.setSize(size);
 	text.setFont(font);
@@ -13,41 +13,41 @@ ren::ui::Button::Button(sf::Font& font, sf::Vector2f size, std::string ButtonTex
 	text.setFillColor(sf::Color::White);
 }
 
-void ren::ui::Button::setTextStyle(sf::Uint32 style)
+void Ren::ui::Button::setTextStyle(sf::Uint32 style)
 {
 	text.setStyle(style);
 	adjustText();
 }
 
-void ren::ui::Button::setColor(sf::Color BoxColor, sf::Color TextColor)
+void Ren::ui::Button::setColor(sf::Color BoxColor, sf::Color TextColor)
 {
 	box.setFillColor(BoxColor);
 	text.setFillColor(TextColor);
 }
 
-void ren::ui::Button::setPosition(const sf::Vector2f& pos)
+void Ren::ui::Button::setPosition(const sf::Vector2f& pos)
 {
 	box.setPosition(pos);
 	adjustText();
 }
 
-sf::Vector2f ren::ui::Button::getSize() const
+sf::Vector2f Ren::ui::Button::getSize() const
 {
 	return box.getSize();
 }
 
-void ren::ui::Button::setFunction(std::function<void(void)> ButtonFunction)
+void Ren::ui::Button::setFunction(std::function<void(void)> ButtonFunction)
 {
 	this->ButtonFunction = ButtonFunction;
 }
 
-void ren::ui::Button::render(sf::RenderTarget& renderTarget)
+void Ren::ui::Button::render(sf::RenderTarget& renderTarget)
 {
 	renderTarget.draw(box);
 	renderTarget.draw(text);
 }
 
-void ren::ui::Button::EventHandler(sf::Event e, const sf::RenderWindow& window)
+void Ren::ui::Button::EventHandler(sf::Event e, const sf::RenderWindow& window)
 {
 	sf::Vector2f m_pos = sf::Vector2f(sf::Mouse::getPosition(window));
 
@@ -58,11 +58,11 @@ void ren::ui::Button::EventHandler(sf::Event e, const sf::RenderWindow& window)
 		
 }
 
-ren::ui::Button::~Button()
+Ren::ui::Button::~Button()
 {
 }
 
-void ren::ui::Button::adjustText()
+void Ren::ui::Button::adjustText()
 {
 	text.setCharacterSize(int(box.getGlobalBounds().height / 2.0f));
 	text.setOrigin(text.getGlobalBounds().width / 2.0f, text.getGlobalBounds().height / 2.0f);

@@ -5,7 +5,7 @@
 #include<memory>
 #include<functional>
 
-namespace ren
+namespace Ren
 {
 	class Event;
 	
@@ -14,7 +14,7 @@ namespace ren
 		class Button : public guibase
 		{
 		public:
-			//Ctor : Takes a font, size of the button and text to be displayed on the Button 
+			//Ctor : Takes a font, size of the button and text to be displayed2 on the Button
 			Button(sf::Font& font, 
 				sf::Vector2f size = sf::Vector2f(256.0f, 64.0f),
 				std::string ButtonText = "NewButton");

@@ -1,16 +1,31 @@
 #pragma once
 
-#include<Rengine/Core/Application.hpp>
+#include<Rengine/Core/IApplication.hpp>
+#include<type_traits>
+#include<concepts>
+#include <utility>
 
-namespace ren
+namespace Ren
 {
+    template<typename T>
+    concept IsApplication = std::is_base_of_v<IApplication, T>;
+
     class Engine
     {
     public:
-        static int StartApplication()
+        template<IsApplication T, typename... Args>
+        static int StartApplication(Args &&... args)
         {
+            if(_application)
+            {
+                return -1;
+            }
+
+            _application = new T(std::forward<Args>(args)...);
+            return _application->Start();
         }
+
     private:
-        Application _application;
+        static IApplication* _application;
     };
 }

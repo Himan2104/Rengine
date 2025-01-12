@@ -7,12 +7,12 @@
 #include "Rengine/ECS/System.hpp"
 
 
-namespace ren::ecs
+namespace Ren::ecs
 {
-	class REN_API System;
-	class REN_API Entity;
+	class System;
+	class Entity;
 
-	class REN_API Component
+	class Component
 	{
 	public:
 		Component(const std::string& identifier, std::shared_ptr<Entity> entity);

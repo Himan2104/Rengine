@@ -1,6 +1,6 @@
 #include"Rengine/core/LevelManager.hpp"
 
-namespace ren
+namespace Ren
 {
     LevelManager::LevelManager(Application *application)
     {

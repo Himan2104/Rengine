@@ -6,7 +6,7 @@
 #include <Rengine/Core/Level.hpp>
 #include <Rengine/Config.hpp>
 
-namespace ren
+namespace Ren
 {
     class Application;
     class Level;
@@ -14,7 +14,7 @@ namespace ren
     template<typename T>
     concept IsLevel = std::is_base_of<Level, T>::value;
 
-    class REN_API LevelManager final : sf::NonCopyable
+    class LevelManager final : sf::NonCopyable
     {
     public:
         explicit LevelManager(Application* application);

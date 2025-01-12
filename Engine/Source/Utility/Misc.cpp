@@ -5,7 +5,7 @@
 #include<vector>
 #include<functional>
 
-namespace ren
+namespace Ren
 {
     std::string GetCurrentTime(const char* format)
     {

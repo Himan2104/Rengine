@@ -4,7 +4,7 @@
 
 #include<SFML/Graphics.hpp>
 
-namespace ren
+namespace Ren
 {
 	namespace ui
 	{

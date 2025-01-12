@@ -8,9 +8,9 @@ This message may not be removed from any iteration of this code
 #include<SFML/System.hpp>
 #include"Rengine/Config.hpp"
 
-namespace ren
+namespace Ren
 {
-    class REN_API TimeKeeper
+    class TimeKeeper
     {
     public:
         enum class ClockType

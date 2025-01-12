@@ -1,6 +1,6 @@
 #include "Rengine/UI/TextBox.hpp"
 
-ren::ui::TextBox::TextBox(sf::Vector2f size, std::string label)
+Ren::ui::TextBox::TextBox(sf::Vector2f size, std::string label)
 {
 	isActive = false;
 
@@ -19,18 +19,18 @@ ren::ui::TextBox::TextBox(sf::Vector2f size, std::string label)
 
 }
 
-std::string ren::ui::TextBox::getInput()
+std::string Ren::ui::TextBox::getInput()
 {
 	return str;
 }
 
-void ren::ui::TextBox::setFont(sf::Font& font)
+void Ren::ui::TextBox::setFont(sf::Font& font)
 {
 	label.setFont(font);
 	inputText.setFont(font);
 }
 
-void ren::ui::TextBox::setColor(sf::Color FillColor, sf::Color OutlineColor, sf::Color TextColor)
+void Ren::ui::TextBox::setColor(sf::Color FillColor, sf::Color OutlineColor, sf::Color TextColor)
 {
 	box.setFillColor(FillColor);
 	box.setOutlineColor(OutlineColor);
@@ -38,19 +38,19 @@ void ren::ui::TextBox::setColor(sf::Color FillColor, sf::Color OutlineColor, sf:
 	inputText.setFillColor(TextColor);
 }
 
-void ren::ui::TextBox::setPosition(const sf::Vector2f& pos)
+void Ren::ui::TextBox::setPosition(const sf::Vector2f& pos)
 {
 	box.setPosition(pos);
 	adjustLabel();
 	adjustInputText();
 }
 
-sf::Vector2f ren::ui::TextBox::getSize() const
+sf::Vector2f Ren::ui::TextBox::getSize() const
 {
 	return box.getPosition();
 }
 
-void ren::ui::TextBox::EventHandler(sf::Event e, const sf::RenderWindow& window)
+void Ren::ui::TextBox::EventHandler(sf::Event e, const sf::RenderWindow& window)
 {
 	checkClick(e, window);
 	if(e.type == sf::Event::TextEntered)
@@ -69,7 +69,7 @@ void ren::ui::TextBox::EventHandler(sf::Event e, const sf::RenderWindow& window)
 			isActive = false;
 }
 
-void ren::ui::TextBox::render(sf::RenderTarget& renderTarget)
+void Ren::ui::TextBox::render(sf::RenderTarget& renderTarget)
 {
 	adjustInputText();
 	renderTarget.draw(box);
@@ -78,11 +78,11 @@ void ren::ui::TextBox::render(sf::RenderTarget& renderTarget)
 	 
 }
 
-ren::ui::TextBox::~TextBox()
+Ren::ui::TextBox::~TextBox()
 {
 }
 
-void ren::ui::TextBox::checkClick(sf::Event e, const sf::RenderWindow& window)
+void Ren::ui::TextBox::checkClick(sf::Event e, const sf::RenderWindow& window)
 {
 	sf::Vector2f m_pos = sf::Vector2f(sf::Mouse::getPosition(window));
 	if (e.type == sf::Event::MouseButtonPressed)
@@ -93,14 +93,14 @@ void ren::ui::TextBox::checkClick(sf::Event e, const sf::RenderWindow& window)
 				isActive = false;
 }
 
-void ren::ui::TextBox::adjustInputText()
+void Ren::ui::TextBox::adjustInputText()
 {
 	inputText.setCharacterSize(box.getGlobalBounds().height/2.0f);
 	inputText.setOrigin(inputText.getGlobalBounds().width / 2.0f, inputText.getGlobalBounds().height / 2.0f);
 	inputText.setPosition(box.getPosition() - sf::Vector2f(0.0f, inputText.getGlobalBounds().height / 10.0f));
 }
 
-void ren::ui::TextBox::adjustLabel()
+void Ren::ui::TextBox::adjustLabel()
 {
 	//label.setOrigin(0.0f, label.getGlobalBounds().top label.getGlobalBounds().height);
 	label.setPosition(box.getGlobalBounds().left, box.getGlobalBounds().top - label.getCharacterSize());

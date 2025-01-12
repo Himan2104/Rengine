@@ -1,11 +1,13 @@
 #include"Rengine/Core/Simulation.hpp"
 
-ren::Simulation::Simulation()
+namespace Ren
+{
+Simulation::Simulation()
 {
 
 }
 
-void ren::Simulation::Tick()
+void Simulation::Tick()
 {
     if(!_isRunning)
     {
@@ -13,12 +15,13 @@ void ren::Simulation::Tick()
     }
 }
 
-void ren::Simulation::Start()
+void Simulation::Start()
 {
     _isRunning = true;
 }
 
-void ren::Simulation::Stop()
+void Simulation::Stop()
 {
     _isRunning = false;
+}
 }

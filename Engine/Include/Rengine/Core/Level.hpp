@@ -5,8 +5,9 @@
 #include <SFML/Window/Event.hpp>
 
 #include <Rengine/Config.hpp>
+#include<memory>
 
-namespace ren
+namespace Ren
 {
     class Application;
     class LevelManager;

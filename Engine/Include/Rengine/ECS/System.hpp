@@ -4,11 +4,11 @@
 #include<vector>
 #include"Rengine/ECS/Component.hpp"
 
-namespace ren::ecs
+namespace Ren::ecs
 {
-	class REN_API Component;
+	class Component;
 
-	class REN_API System
+	class System
 	{
 	public:
 		System();

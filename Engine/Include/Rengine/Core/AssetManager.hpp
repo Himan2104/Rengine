@@ -3,9 +3,9 @@
 #include<SFML/Audio.hpp>
 #include"Rengine/Config.hpp"
 
-namespace ren
+namespace Ren
 {
-	class REN_API AssetManager : public sf::NonCopyable
+	class AssetManager : public sf::NonCopyable
 	{
 	public:
 		AssetManager();

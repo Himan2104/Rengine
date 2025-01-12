@@ -2,13 +2,11 @@
 #include<map>
 #include<string>
 
-
-
 #include"Rengine/Config.hpp"
 
-namespace ren
+namespace Ren
 {
-	class REN_API Console
+	class Console final
 	{
 	public:
 		

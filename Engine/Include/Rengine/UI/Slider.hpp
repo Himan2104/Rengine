@@ -3,7 +3,7 @@
 #include"guibase.hpp"
 #include<iostream>
 
-namespace ren
+namespace Ren
 {
 	namespace ui
 	{
