@@ -1,22 +1,18 @@
-#include<Rengine/core/Application.hpp>
-#include<Rengine/Utility/Misc.hpp>
-#include"TestState.hpp"
+#include "TestState.hpp"
+#include <Rengine/Utility/Misc.hpp>
+#include <Rengine/core/Application.hpp>
 
 int main()
 {
-    Ren::Settings _settings
-    {
-        sf::VideoMode(1920,1080,32), //videomode
-        144, //framerate limit
-        false, //fullscreen
-        false //vsync
+    Ren::Settings _settings{
+        sf::VideoMode({1920, 1080}, 32), // videomode
+        144,                             // framerate limit
+        false,                           // fullscreen
+        false                            // vsync
     };
 
-    Ren::ApplicationProperties _application_properties
-    {
-        "Rengine Demo", //App name
-        0u, 1u, 1u, _settings
-    };
+    Ren::ApplicationProperties _application_properties{"Rengine Demo", // App name
+                                                       0u, 1u, 1u, _settings};
     auto* _application = new Ren::Application(_application_properties);
 
     _application->Run(new TestState());

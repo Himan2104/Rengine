@@ -27,7 +27,7 @@ namespace Ren
     template<typename T>
     inline void CenterOrigin(T& object)
     {
-        object.setOrigin(object.getGlobalBounds().width / 2.0f, object.getGlobalBounds().height / 2.0f);
+        object.setOrigin(object.getGlobalBounds().getCenter());
     }
 
     /// <summary>

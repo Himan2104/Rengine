@@ -45,7 +45,7 @@ void AssetManager::loadTexture(std::string_view name, std::string filepath)
 void AssetManager::loadFont(std::string_view name, std::string filepath)
 {
     sf::Font temp;
-    if (!temp.loadFromFile(filepath))
+    if (!temp.openFromFile(filepath))
         std::cout << name << " failed to load" << std::endl;
     else
         _fonts.insert(std::make_pair(name, temp));

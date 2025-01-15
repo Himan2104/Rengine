@@ -1,2 +1,2 @@
 CompileFlags:
-    CompilationDatabase: "Build/cmake-build-debug-mingw"
+    CompilationDatabase: "Build"

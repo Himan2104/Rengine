@@ -7,11 +7,11 @@ add_library(rengine Source/Core/Application.cpp
         Source/ECS/EntityManager.cpp
         Source/ECS/Entity.cpp
         Source/ECS/System.cpp
-        Source/UI/Button.cpp
-        Source/UI/CheckBox.cpp
-        Source/UI/guibase.cpp
-        Source/UI/Slider.cpp
-        Source/UI/TextBox.cpp
+        #Source/UI/Button.cpp
+        #Source/UI/CheckBox.cpp
+        #Source/UI/guibase.cpp
+        #Source/UI/Slider.cpp
+        #Source/UI/TextBox.cpp
         Source/Utility/Debug.cpp
         Source/Utility/Misc.cpp
         Source/Utility/TimeKeeper.cpp

@@ -1,60 +1,57 @@
-//Class for utilizing Buttons 
+// Class for utilizing Buttons
 #pragma once
-#include<SFML/Graphics.hpp>
-#include"guibase.hpp"
-#include<memory>
-#include<functional>
+#include "guibase.hpp"
+#include <SFML/Graphics.hpp>
+#include <cstdint>
+#include <functional>
+#include <memory>
 
 namespace Ren
 {
-	class Event;
-	
-	namespace ui
-	{
-		class Button : public guibase
-		{
-		public:
-			//Ctor : Takes a font, size of the button and text to be displayed2 on the Button
-			Button(sf::Font& font, 
-				sf::Vector2f size = sf::Vector2f(256.0f, 64.0f),
-				std::string ButtonText = "NewButton");
+class Event;
 
-			//Edit styling options for the text on the button (Bold, Italic, etc.)
-			void setTextStyle(sf::Uint32 style);
+namespace ui
+{
+    class Button : public guibase
+    {
+    public:
+        // Ctor : Takes a font, size of the button and text to be displayed2 on the Button
+        Button(sf::Font& font, sf::Vector2f size = sf::Vector2f(256.0f, 64.0f), std::string ButtonText = "NewButton");
 
-			//check if clicked
-			Event onClick(const sf::RenderWindow& window);
+        // Edit styling options for the text on the button (Bold, Italic, etc.)
+        void setTextStyle(std::uint32_t style);
 
-			//Set the Color of the Button and the Text
-			void setColor(sf::Color BoxColor, sf::Color TextColor);
+        // check if clicked
+        Event onClick(const sf::RenderWindow& window);
 
-			//Set the Position of the Button
-			void setPosition(const sf::Vector2f& pos) override;
+        // Set the Color of the Button and the Text
+        void setColor(sf::Color BoxColor, sf::Color TextColor);
 
-			//Getter for the size of the bounded box of the button
-			sf::Vector2f getSize() const override;
+        // Set the Position of the Button
+        void setPosition(const sf::Vector2f& pos) override;
 
-			//Set the function to be executed when the button is clicked
-			void setFunction(std::function<void(void)> ButtonFunction);
+        // Getter for the size of the bounded box of the button
+        sf::Vector2f getSize() const override;
 
-			//Render the button. Takes a render target (your window in simple terms)
-			void render(sf::RenderTarget& renderTarget) override;
+        // Set the function to be executed when the button is clicked
+        void setFunction(std::function<void(void)> ButtonFunction);
 
-			//Handles the events (ButtonClick)
-			void EventHandler(sf::Event e, const sf::RenderWindow& window) override;
+        // Render the button. Takes a render target (your window in simple terms)
+        void render(sf::RenderTarget& renderTarget) override;
 
-			//Dtor
-			~Button();
+        // Handles the events (ButtonClick)
+        void EventHandler(sf::Event e, const sf::RenderWindow& window) override;
 
-		private:
-			sf::RectangleShape box;
-			sf::Text text;
+        // Dtor
+        ~Button();
 
-			std::function<void(void)> ButtonFunction;
+    private:
+        sf::RectangleShape box;
+        sf::Text text;
 
-			void adjustText();
+        std::function<void(void)> ButtonFunction;
 
-		};
-	}
-}
-
+        void adjustText();
+    };
+} // namespace ui
+} // namespace Ren
