@@ -1,4 +1,6 @@
-add_library(rengine Source/Core/Application.cpp
+add_library(rengine
+        Source/Application/Bootstrapper.cpp
+        Source/Application/Parameters.cpp
         Source/Core/AssetManager.cpp
         Source/Core/Console.cpp
         Source/Core/Level.cpp
@@ -19,7 +21,7 @@ add_library(rengine Source/Core/Application.cpp
         Include/Rengine/Engine.hpp
         Source/Core/EventSystem.cpp
         Include/Rengine/Utility/CommonHelpers.hpp
-        Include/Rengine/Core/IApplication.hpp)
+        Include/Rengine/Application/IApplication.hpp)
 
 
 set(RENGINE_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/Include)

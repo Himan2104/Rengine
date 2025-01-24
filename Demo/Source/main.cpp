@@ -12,7 +12,7 @@ int main()
     };
 
     Ren::ApplicationProperties _application_properties{"Rengine Demo", // App name
-                                                       0u, 1u, 1u, _settings};
+                                                       0u, 1u, 5u, _settings};
     auto* _application = new Ren::Application(_application_properties);
 
     _application->Run(new TestState());

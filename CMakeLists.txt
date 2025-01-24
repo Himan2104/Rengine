@@ -4,8 +4,9 @@ project(Rengine VERSION 0.1.4 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+set(CMAKE_DEBUG_POSTFIX d)
+
 option(BUILD_SHARED_LIBS "Build shared libraries" OFF)
-option(REN_DEBUG "Enable debug mode" OFF)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
