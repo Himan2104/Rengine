@@ -1,58 +1,79 @@
 #pragma once
 
-#include<algorithm>
-#include<concepts>
-#include<map>
-#include<memory>
-#include<vector>
-#include<typeindex>
-#include<functional>
-#include<pstl/glue_execution_defs.h>
+#include <Rengine/Config.hpp>
+#include <Rengine/Core/Definitions.hpp>
+#include <Rengine/Core/Hash.hpp>
+#include <Rengine/Core/Log.hpp>
+#include <algorithm>
+#include <functional>
+#include <map>
+#include <memory>
+#include <utility>
+#include <vector>
 
 namespace Ren
 {
-    class IEvent
-    {
-    public:
-        virtual ~IEvent() = default;
 
-    private:
-        IEvent() = default;
+using EventSubscriptionToken = UInt32;
 
-        friend class EventSystem;
-    };
+class IEvent // Interface for all Events
+{
+};
 
-    template<typename T>
-    concept IsEvent = std::is_base_of<IEvent, T>::value;
+template <typename T>
+concept IsEvent = std::is_base_of<IEvent, T>::value;
 
-    using Subscribers = std::vector<std::function<void *(IEvent &)>>;
+class EventSystem
+{
+public:
+    using EventTypeID            = UInt64;
+    using EventSubscriptionToken = UInt32;
+    using TCallback              = std::function<void(std::shared_ptr<IEvent>)>;
+    using SubscriberEntry        = std::pair<EventSubscriptionToken, TCallback>;
+    using Subscribers            = std::vector<SubscriberEntry>;
 
-    class EventSystem
-    {
-    public:
-        static EventSystem &GetInstance();
+    static EventSystem& GetInstance();
 
-        template<IsEvent T, typename... Args>
-        void Invoke(Args &&... args)
-        {
-            T event(std::forward<Args>(args)...);
-            auto& x = _subscribers[std::type_index(typeid(T))];
-            std::for_each(std::execution::par, x.begin(), x.end(), [&](auto &e) { e(event); });
-        }
+    template <IsEvent T, typename... Args> void Invoke(Args&&... args);
+    template <IsEvent T> EventSubscriptionToken Subscribe(TCallback callback);
+    template <IsEvent T> void Unsubscribe(EventSubscriptionToken est);
 
-        template<IsEvent T>
-        void Subscribe(std::function<void *(T &)> callback)
-        {
-#ifdef REN_REPORT_EVENT_RESUBSCRIPTION
+private:
+    EventSystem() = default;
 
-#endif
-            _subscribers[std::type_index(typeid(T))].push_back(std::move(callback));
+    template <IsEvent T> consteval EventTypeID GetEventTypeID() { return Hashing::FNV1A(REN_FUNC_SIG); }
 
-        }
+private:
+    std::map<EventTypeID, Subscribers> _subscribers;
+    UInt32 _eventSubscriptionTokenCount{};
+};
 
-    private:
-        EventSystem() = default;
-
-        std::map<std::type_index, Subscribers> _subscribers;
-    };
+template <IsEvent T, typename... Args> void EventSystem::Invoke(Args&&... args)
+{
+    auto event = std::make_shared<T>(T{{}, std::forward<Args>(args)...});
+    auto& x    = _subscribers[GetEventTypeID<T>()];
+    std::for_each(x.begin(), x.end(), [&](auto& pair) { pair.second(event); });
 }
+
+template <IsEvent T> EventSubscriptionToken EventSystem::Subscribe(TCallback callback)
+{
+    EventSubscriptionToken e = _eventSubscriptionTokenCount++;
+    _subscribers[GetEventTypeID<T>()].push_back(std::move(std::make_pair(e, callback)));
+    return e;
+}
+
+template <IsEvent T> void EventSystem::Unsubscribe(EventSubscriptionToken est)
+{
+    auto& x = _subscribers[GetEventTypeID<T>()];
+    auto it = std::find_if(x.begin(), x.end(), [&](const auto& entry) { return entry.first == est; });
+    if (it != x.end())
+    {
+        x.remove(it);
+        return;
+    }
+#ifdef REN_EVSYS_LOG_FAILED_UNSUBSCRIBE
+    REN_LOG_WARNING("EventSubscriptionToken Not Found! It has probably already been deleted.")
+#endif
+}
+
+} // namespace Ren

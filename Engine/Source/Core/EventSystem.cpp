@@ -2,9 +2,9 @@
 
 namespace Ren
 {
-    EventSystem &EventSystem::GetInstance()
-    {
-        static EventSystem instance;
-        return instance;
-    }
+EventSystem& EventSystem::GetInstance()
+{
+    static EventSystem instance;
+    return instance;
 }
+} // namespace Ren

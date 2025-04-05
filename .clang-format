@@ -16,10 +16,11 @@ AlwaysBreakAfterReturnType: None
 AlwaysBreakBeforeMultilineStrings: 'false'
 BreakBeforeBraces: Allman
 BreakConstructorInitializers: BeforeComma
+ColumnLimit: '256'
 Cpp11BracedListStyle: 'true'
 FixNamespaceComments: 'true'
 IncludeBlocks: Merge
-IndentPPDirectives: None
+IndentPPDirectives: BeforeHash
 IndentWidth: '4'
 Language: Cpp
 NamespaceIndentation: Inner

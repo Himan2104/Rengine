@@ -1,8 +1,10 @@
 #pragma once
 
-#define REN_VERSION_MAJOR 0
-#define REN_VERSION_MINOR 1
-#define REN_VERSION_PATCH 4
+#ifndef REN_VERSION_MAJOR
+    #define REN_VERSION_MAJOR 0
+    #define REN_VERSION_MINOR 1
+    #define REN_VERSION_PATCH 4
+#endif
 
 #if defined(_WIN32)
     #define REN_PLATFORM_WINDOWS
@@ -12,6 +14,8 @@
     #else
         #error "Unsupported OS"
     #endif
+#else
+    #error "Unsupported OS"
 #endif
 
 #if defined(REN_PLATFORM_WINDOWS)
@@ -19,8 +23,8 @@
     #define REN_IMPORT __declspec(dllimport)
 #elif defined(REN_PLATFORM_LINUX)
     #if __GNUC__ >= 4
-        #define REN_EXPORT __attribute__ ((__visibility__ ("default")))
-        #define REN_IMPORT __attribute__ ((__visibility__ ("default")))
+        #define REN_EXPORT __attribute__((__visibility__("default")))
+        #define REN_IMPORT __attribute__((__visibility__("default")))
     #else
         #define REN_EXPORT
         #define REN_IMPORT
@@ -29,6 +33,14 @@
 
 #ifdef REN_DEBUG
     #define LOG_EXPORT_STACK_TRACE
+#endif
+
+#if defined(__GNUC__) || defined(__clang__)
+    #define REN_FUNC_SIG __PRETTY_FUNCTION__
+#elif defined(_MSC_VER)
+    #define REN_FUNC_SIG __FUNCSIG__
+#else
+    #error "Unknown Compiler! Could not resolve REN_FUNC_SIG"
 #endif
 
 #define REN_API REN_IMPORT
