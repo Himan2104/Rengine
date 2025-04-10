@@ -1,6 +1,9 @@
 #pragma once
 
 #include "Rengine/Core/Definitions.hpp"
+#include <format>
+#include <map>
+#include <string>
 
 namespace Ren::ECS
 {
@@ -54,3 +57,47 @@ private:
 };
 
 } // namespace Ren::ECS
+
+template <> struct std::formatter<Ren::ECS::EntityFlags>
+{
+    auto format(const Ren::ECS::EntityFlags& ef, std::format_context& ctx)
+    {
+        return std::format_to(ctx.out(), "{}", _enumNameMappings.contains(ef) ? _enumNameMappings.at(ef) : "<EFERROR!>");
+    }
+
+private:
+    const std::map<Ren::ECS::EntityFlags, std::string> _enumNameMappings = {
+        {Ren::ECS::EntityFlags::EntityFlagPlaceholder_0, "IsAlive"},
+        {Ren::ECS::EntityFlags::EntityFlagPlaceholder_1, "IsAlive"},
+        {Ren::ECS::EntityFlags::EntityFlagPlaceholder_2, "IsAlive"},
+        {Ren::ECS::EntityFlags::EntityFlagPlaceholder_3, "IsAlive"},
+        {Ren::ECS::EntityFlags::EntityFlagPlaceholder_4, "IsAlive"},
+        {Ren::ECS::EntityFlags::EntityFlagPlaceholder_5, "IsAlive"},
+        {Ren::ECS::EntityFlags::EntityFlagPlaceholder_6, "IsAlive"},
+        {Ren::ECS::EntityFlags::EntityFlagPlaceholder_7, "IsAlive"},
+        {Ren::ECS::EntityFlags::EntityFlagPlaceholder_8, "IsAlive"},
+        {Ren::ECS::EntityFlags::EntityFlagPlaceholder_9, "IsAlive"},
+        {Ren::ECS::EntityFlags::EntityFlagPlaceholder_10, "IsAlive"},
+        {Ren::ECS::EntityFlags::EntityFlagPlaceholder_11, "IsAlive"},
+        {Ren::ECS::EntityFlags::EntityFlagPlaceholder_12, "IsAlive"},
+        {Ren::ECS::EntityFlags::EntityFlagPlaceholder_13, "IsAlive"},
+        {Ren::ECS::EntityFlags::EntityFlagPlaceholder_14, "IsAlive"},
+        {Ren::ECS::EntityFlags::EntityFlagPlaceholder_15, "IsAlive"},
+        {Ren::ECS::EntityFlags::EntityFlagPlaceholder_16, "IsAlive"},
+        {Ren::ECS::EntityFlags::EntityFlagPlaceholder_17, "IsAlive"},
+        {Ren::ECS::EntityFlags::EntityFlagPlaceholder_18, "IsAlive"},
+        {Ren::ECS::EntityFlags::EntityFlagPlaceholder_19, "IsAlive"},
+        {Ren::ECS::EntityFlags::EntityFlagPlaceholder_20, "IsAlive"},
+        {Ren::ECS::EntityFlags::EntityFlagPlaceholder_21, "IsAlive"},
+        {Ren::ECS::EntityFlags::EntityFlagPlaceholder_22, "IsAlive"},
+        {Ren::ECS::EntityFlags::EntityFlagPlaceholder_23, "IsAlive"},
+        {Ren::ECS::EntityFlags::EntityFlagPlaceholder_24, "IsAlive"},
+        {Ren::ECS::EntityFlags::EntityFlagPlaceholder_25, "IsAlive"},
+        {Ren::ECS::EntityFlags::EntityFlagPlaceholder_26, "IsAlive"},
+        {Ren::ECS::EntityFlags::EntityFlagPlaceholder_27, "IsAlive"},
+        {Ren::ECS::EntityFlags::EntityFlagPlaceholder_28, "IsAlive"},
+        {Ren::ECS::EntityFlags::EntityFlagPlaceholder_29, "IsAlive"},
+        {Ren::ECS::EntityFlags::EntityFlagPlaceholder_30, "IsAlive"},
+        {Ren::ECS::EntityFlags::EntityFlagPlaceholder_31, "IsAlive"},
+    };
+};

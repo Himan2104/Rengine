@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Rengine/Core/Log.hpp"
 #include <Rengine/Application/IApplication.hpp>
 #include <SFML/Window/VideoMode.hpp>
 #include <SFML/Window/Window.hpp>
@@ -17,7 +18,9 @@ public:
     {
         _application = new T(argc, argv);
         _application->Initialize();
+        REN_LOG_INFO("Application Initialized");
         _application->Run();
+        REN_LOG_INFO("Finished main loop.... Creating cache cleanup cycle and exiting.");
         return _application->Cleanup();
     }
     friend IApplication* const GetApplication();

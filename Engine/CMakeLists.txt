@@ -14,6 +14,13 @@ set_target_properties(rengine-core PROPERTIES PREFIX "")
 target_include_directories(rengine-core PUBLIC ${RENGINE_INCLUDE_DIRS} ${SFML_INCLUDE_DIR})
 target_link_libraries(rengine-core PRIVATE sfml-graphics)
 
+add_library(rengine-input
+        Source/Input/Devices/Keyboard.cpp)
+
+set_target_properties(rengine-input PROPERTIES PREFIX "")
+target_include_directories(rengine-input PUBLIC ${RENGINE_INCLUDE_DIRS} ${SFML_INCLUDE_DIR})
+target_link_libraries(rengine-input PRIVATE sfml-window)
+
 
 add_library(rengine-af
         Source/Application/Bootstrapper.cpp
