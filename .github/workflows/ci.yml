@@ -1,4 +1,4 @@
-name: Build C++ CMake Project
+name: Rengine CI
 
 on:
   push:
@@ -13,35 +13,28 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
-        compiler: [gcc, clang, msvc]
+        os: [windows-latest, archlinux]
+        compiler: [gcc, llvm, msvc]
         exclude:
-          - os: macos-latest
-            compiler: msvc
-          - os: ubuntu-latest
-            compiler: msvc
           - os: windows-latest
-            compiler: clang
-          - os: macos-latest
-            compiler: gcc
+            compiler: llvm
+          - os: archlinux
+            compiler: msvc
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Install dependencies (Linux/macOS)
-        if: matrix.os != 'windows-latest'
-        run: |
-          sudo apt update && sudo apt install -y cmake g++
-          brew install cmake llvm
+      - name: Install dependencies (Arch Linux)
+        if: matrix.os == 'archlinux'
+        run: sudo pacman -Syu --noconfirm cmake gcc clang
 
       - name: Install dependencies (Windows)
         if: matrix.os == 'windows-latest'
-        run: choco install cmake
+        run: choco install cmake gcc
 
       - name: Configure CMake
         run: cmake -B build -DCMAKE_CXX_COMPILER=${{ matrix.compiler }}
 
       - name: Build project
         run: cmake --build build
-
