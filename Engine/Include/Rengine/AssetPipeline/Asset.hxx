@@ -21,6 +21,8 @@ public:
 
 private:
     AssetID _assetID;
+    
+    Byte* _rawAssetData;
 
     friend class AssetManager;
 };

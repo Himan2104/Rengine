@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Rengine/Core/Array.hxx"
+#include <Rengine/AssetPipeline/Asset.hxx>
 #include <Rengine/Core/Definitions.hxx>
 #include <map>
 #include <string>
@@ -15,7 +17,12 @@ public:
     AssetBank() = default;
 
 private:
-    std::map<AssetID, class IAsset*> _assetMapping;
+    Bool LoadManifest();
+
+private:
+    std::map<AssetID, Asset*> _assetMapping;
+
+    DynamicArray<Asset> _assetChunk;
 
 #ifndef REN_AP_OPTIMIZE // Named Mappings shall only exist in unoptimized builds.
     std::map<std::string, AssetID> _assetNameMappings;

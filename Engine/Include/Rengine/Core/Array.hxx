@@ -9,7 +9,7 @@ namespace Ren
 
 template <typename T, UInt64 size> class Array
 {
-public:
+private:
     using FillPred = std::function<T(UInt64 index)>;
 
 public:
@@ -43,7 +43,7 @@ private:
     T data[size];
 };
 
-template <typename T> class DynamicArray : std::vector<T>
+template <typename T> class DynamicArray : public std::vector<T>
 {
 };
 

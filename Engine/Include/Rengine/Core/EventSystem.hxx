@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Rengine/Core/Array.hxx"
 #include <Rengine/Config.hxx>
 #include <Rengine/Core/Definitions.hxx>
 #include <Rengine/Core/Hash.hxx>
@@ -30,7 +31,7 @@ public:
     using EventSubscriptionToken = UInt32;
     using TCallback              = std::function<void(std::shared_ptr<IEvent>)>;
     using SubscriberEntry        = std::pair<EventSubscriptionToken, TCallback>;
-    using Subscribers            = std::vector<SubscriberEntry>;
+    using Subscribers            = DynamicArray<SubscriberEntry>;
 
     static EventSystem& GetInstance();
 

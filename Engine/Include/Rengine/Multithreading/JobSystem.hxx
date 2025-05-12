@@ -1,7 +1,7 @@
 #pragma once
 
 #include <Rengine/Core/Definitions.hxx>
-#include <Rengine/JobSystem/LockFreeJobQueue.hxx>
+#include <Rengine/Multithreading/LockFreeJobQueue.hxx>
 #include <atomic>
 #include <functional>
 #include <mutex>

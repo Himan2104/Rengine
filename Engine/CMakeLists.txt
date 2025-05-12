@@ -12,7 +12,7 @@ add_library(rengine-core
 
 set_target_properties(rengine-core PROPERTIES PREFIX "")
 target_include_directories(rengine-core PUBLIC ${RENGINE_INCLUDE_DIRS} ${SFML_INCLUDE_DIR})
-target_link_libraries(rengine-core PRIVATE sfml-graphics)
+target_link_libraries(rengine-core PRIVATE sfml-graphics sfml-network sfml-audio sfml-window sfml-system sfml-main)
 
 add_library(rengine-input
         Source/Input/Devices/Keyboard.cxx)
@@ -32,7 +32,7 @@ target_include_directories(rengine-af PUBLIC ${RENGINE_INCLUDE_DIRS} ${SFML_INCL
 target_link_libraries(rengine-af PRIVATE rengine-core sfml-graphics)
 
 add_library(rengine-mt
-        Source/JobSystem/JobSystem.cxx)
+        Source/Multithreading/JobSystem.cxx)
 
 set_target_properties(rengine-mt PROPERTIES PREFIX "")
 target_include_directories(rengine-mt PUBLIC ${RENGINE_INCLUDE_DIRS} ${SFML_INCLUDE_DIR})
