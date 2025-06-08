@@ -31,7 +31,8 @@ add_subdirectory(Engine)
 
 add_subdirectory(GameApplication)
 
-#add_custom_target(copy_external_binaries ALL 
-#    COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_BINARY_DIR}/External/SFML/bin ${CMAKE_BINARY_DIR}/bin
-#)
-#add_dependencies(copy_external_binaries game)
+file(GLOB_RECURSE UT_SOURCES "UnitTests/*.cxx")
+
+add_executable(UnitTests ${UT_SOURCES})
+target_link_libraries(UnitTests rengine-core rengine-mt rengine-af)
+add_test(NAME UnitTests COMMAND UnitTests)
