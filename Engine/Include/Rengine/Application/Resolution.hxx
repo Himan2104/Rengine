@@ -14,8 +14,8 @@ public:
     {
     }
 
-    uint16_t GetWidth() const { return _width; }
-    uint16_t GetHeight() const { return _height; }
+    [[nodiscard]] constexpr uint16_t GetWidth() const { return _width; }
+    [[nodiscard]] constexpr uint16_t GetHeight() const { return _height; }
 
     static const std::vector<Resolution>& GetAvailableResolutions();
 

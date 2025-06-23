@@ -36,3 +36,10 @@ add_library(rengine-mt
 
 set_target_properties(rengine-mt PROPERTIES PREFIX "")
 target_include_directories(rengine-mt PUBLIC ${RENGINE_INCLUDE_DIRS} ${SFML_INCLUDE_DIR})
+
+add_library(rengine-gfx
+        Source/Graphics/Graphics.cxx)
+
+set_target_properties(rengine-gfx PROPERTIES PREFIX "")
+target_include_directories(rengine-gfx PUBLIC ${RENGINE_INCLUDE_DIRS} ${SFML_INCLUDE_DIR})
+target_link_libraries(rengine-gfx PRIVATE rengine-core sfml-graphics)

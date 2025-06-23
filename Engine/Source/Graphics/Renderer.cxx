@@ -1,0 +1,15 @@
+#include "Rengine/Core/Definitions.hxx"
+#include <Rengine/Graphics/RenderObject.hxx>
+#include <Rengine/Graphics/Renderer.hxx>
+
+namespace Ren::Gfx
+{
+
+RenderObject* Renderer::CreateRenderObject()
+{
+    UInt32 newId = _uidProvider.GetNewUID();
+    _renderObjects.push_back(RenderObject(newId));
+    return temp;
+}
+
+} // namespace Ren::Gfx
