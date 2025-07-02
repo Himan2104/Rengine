@@ -37,7 +37,7 @@ void TestRunner::Start()
         }
         else { std::cout << "FAIL\n"; }
 
-        completionPercent = (completedTestCount / testCount) * 100;
+        completionPercent = ((float)completedTestCount / (float)testCount) * 100;
     }
 
     std::cout << std::format("{}/{} passed ({})", passedTests, testCount, (passedTests / testCount) * 100);

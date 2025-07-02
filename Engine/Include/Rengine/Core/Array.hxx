@@ -8,7 +8,8 @@
 namespace Ren
 {
 
-template <typename T, UInt64 size> class Array
+template <typename T, UInt64 size>
+class Array
 {
 private:
     using FillPred = std::function<T(UInt64 index)>;
@@ -44,7 +45,8 @@ private:
     T data[size];
 };
 
-template <typename T, typename Allocator = std::allocator<T>> class DynamicArray : private std::vector<T, Allocator>
+template <typename T, typename Allocator = std::allocator<T>>
+class DynamicArray : private std::vector<T, Allocator>
 {
 private:
     using Base     = std::vector<T, Allocator>;
@@ -55,6 +57,9 @@ public:
     using allocator_type = Allocator;
     using iterator       = typename Base::iterator;
     using const_iterator = typename Base::const_iterator;
+
+    using Base::begin;
+    using Base::end;
 
     constexpr DynamicArray() = default;
 
@@ -88,9 +93,14 @@ public:
 
     void PushBack(T&& value) { Base::push_back(std::move(value)); }
 
-    template <typename... Args> void EmplaceBack(Args&&... args) { Base::emplace_back(std::forward<Args>(args)...); }
+    template <typename... Args>
+    void EmplaceBack(Args&&... args)
+    {
+        Base::emplace_back(std::forward<Args>(args)...);
+    }
 
-    template <typename... Args> typename Base::iterator Emplace(const_iterator pos, Args&&... args)
+    template <typename... Args>
+    typename Base::iterator Emplace(const_iterator pos, Args&&... args)
     {
         return Base::emplace(pos, std::forward<Args>(args)...);
     }
