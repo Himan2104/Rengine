@@ -1,6 +1,6 @@
 #pragma once
 
-#include <vector>
+#include <Rengine/Core/Array.hxx>
 
 namespace Ren
 {
@@ -10,12 +10,12 @@ template <typename T> class UIDProvider final
 public:
     constexpr UIDProvider() = default;
 
-    [[nodiscard]] constexpr T GetNewUID() { return _freeIDs.empty() ? _counter++ : _freeIDs.pop_back(); }
+    [[nodiscard]] constexpr T GetNewUID() { return _freeIDs.IsEmpty() ? _counter++ : _freeIDs.PopBack().value(); }
 
     void FreeID(T id) { _freeIDs.push_back(id); }
 
 private:
-    std::vector<T> _freeIDs;
+    DynamicArray<T> _freeIDs;
     T _counter{};
 };
 

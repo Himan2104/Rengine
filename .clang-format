@@ -16,6 +16,7 @@ AlwaysBreakAfterReturnType: None
 AlwaysBreakBeforeMultilineStrings: 'false'
 BreakBeforeBraces: Allman
 BreakConstructorInitializers: BeforeComma
+AlwaysBreakTemplateDeclarations: 'true'
 ColumnLimit: '128'
 Cpp11BracedListStyle: 'true'
 FixNamespaceComments: 'true'

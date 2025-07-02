@@ -20,6 +20,7 @@ public:
 private:
     std::vector<RenderObject> _renderObjects;
     UIDProvider<UInt32> _uidProvider;
+    DynamicArray<sf::Texture> _textureBank;
 };
 
 } // namespace Ren::Gfx
