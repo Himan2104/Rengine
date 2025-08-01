@@ -20,16 +20,16 @@ public:
     Window(Resolution resolution, UInt8 colorDepth, const std::string& title, WindowMode windowMode);
 
     void PollEvents();
-    bool IsOpen() const;
+    [[nodiscard]] bool IsOpen() const;
     void Close();
     void SetResolution(Resolution resolution);
-    Resolution GetResolution() const;
+    [[nodiscard]] Resolution GetResolution() const;
     void SetColorDepth(UInt8 colorDepth);
-    UInt8 GetColorDepth() const;
+    [[nodiscard]] UInt8 GetColorDepth() const;
     void SetTitle(const std::string& title);
-    const std::string& GetTitle() const;
+    [[nodiscard]] const std::string& GetTitle() const;
     void SetWindowMode(WindowMode windowMode);
-    WindowMode GetWindowMode() const;
+    [[nodiscard]] WindowMode GetWindowMode() const;
 
 private:
     class WindowImpl* _windowImpl = nullptr;
