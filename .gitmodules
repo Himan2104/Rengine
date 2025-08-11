@@ -7,3 +7,6 @@
 [submodule "External/tmxlite"]
 	path = External/tmxlite
 	url = https://github.com/fallahn/tmxlite.git
+[submodule "External/imgui"]
+	path = External/imgui
+	url = https://github.com/ocornut/imgui.git
