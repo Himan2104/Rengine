@@ -1,6 +1,3 @@
-#include "Rengine/Application/IApplication.hxx"
-#include "Rengine/Application/Window.hxx"
-#include "Rengine/Core/EventSystem.hxx"
 #include <GameApplication.hxx>
 
 namespace Ren

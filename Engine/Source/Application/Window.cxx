@@ -1,11 +1,15 @@
-#include "SFML/Window/Window.hpp"
 #include "Rengine/Application/Resolution.hxx"
 #include "Rengine/Core/Definitions.hxx"
 #include "Rengine/Core/EventSystem.hxx"
+#include "Rengine/Core/Log.hxx"
 #include "Rengine/Core/Math/Vector2.hxx"
+#include "SFML/Graphics/RenderWindow.hpp"
+#include "SFML/System/Clock.hpp"
 #include "SFML/Window/VideoMode.hpp"
 #include "SFML/Window/WindowEnums.hpp"
 #include <Rengine/Application/Window.hxx>
+#include <SFML/Window/Window.hpp>
+#include <imgui-SFML.h>
 #include <optional>
 
 #define __REN_HANDLE_WINDOW_EVENT_ALIAS__(EventName, AliasName) \
@@ -14,7 +18,8 @@
 #define __REN_HANDLE_WINDOW_EVENT_NO_ALIAS__(EventName) __REN_HANDLE_WINDOW_EVENT_ALIAS__(EventName, EventName)
 
 #define __REN_GET_MACRO__(_1, _2, NAME, ...) NAME
-#define REN_HANDLE_WINDOW_EVENT(...)         __REN_GET_MACRO__(__VA_ARGS__, __REN_HANDLE_WINDOW_EVENT_ALIAS__, __REN_HANDLE_WINDOW_EVENT_NO_ALIAS__)(__VA_ARGS__)
+#define REN_HANDLE_WINDOW_EVENT(...) \
+    __REN_GET_MACRO__(__VA_ARGS__, __REN_HANDLE_WINDOW_EVENT_ALIAS__, __REN_HANDLE_WINDOW_EVENT_NO_ALIAS__)(__VA_ARGS__)
 
 namespace Ren
 {
@@ -36,13 +41,16 @@ public:
         else
             videoMode = sf::VideoMode(Vector2u32(_resolution.GetWidth(), _resolution.GetHeight()), _colorDepth);
 
-        _window = new sf::Window(videoMode, title, sf::Style::Default);
+        _window = new sf::RenderWindow(videoMode, title, sf::Style::Default);
+
+        if (!ImGui::SFML::Init(*_window)) REN_LOG_ERROR("IMGUI subsystem could not be initialized!");
     }
 
     void PollEvents()
     {
         while (std::optional event = _window->pollEvent())
         {
+            ImGui::SFML::ProcessEvent(*_window, event.value());
             REN_HANDLE_WINDOW_EVENT(Closed);
             REN_HANDLE_WINDOW_EVENT(Resized);
             REN_HANDLE_WINDOW_EVENT(FocusLost);
@@ -59,6 +67,8 @@ public:
 
             // TODO: Implement remaining events
         }
+
+        ImGui::SFML::Update(*_window, _deltaClock.restart());
     }
 
     void Close()
@@ -76,14 +86,21 @@ public:
     const std::string& GetTitle() const { return _title; }
     void SetWindowMode(WindowMode windowMode) { _windowMode = windowMode; }
     WindowMode GetWindowMode() const { return _windowMode; }
+    void Clear(Color clearColor) { _window->clear(sf::Color(clearColor.ToUInt32())); }
+    void Display()
+    {
+        ImGui::SFML::Render(*_window);
+        _window->display();
+    }
 
 private:
-    sf::Window* _window{nullptr};
+    sf::RenderWindow* _window{nullptr};
 
     Resolution _resolution;
     UInt8 _colorDepth;
     std::string _title;
     WindowMode _windowMode;
+    sf::Clock _deltaClock;
 };
 
 Window::Window(Resolution resolution, UInt8 colorDepth, const std::string& title, WindowMode windowMode)
@@ -108,5 +125,7 @@ void Window::SetTitle(const std::string& title) { _windowImpl->SetTitle(title); 
 const std::string& Window::GetTitle() const { return _windowImpl->GetTitle(); }
 void Window::SetWindowMode(WindowMode windowMode) { _windowImpl->SetWindowMode(windowMode); }
 WindowMode Window::GetWindowMode() const { return _windowImpl->GetWindowMode(); }
+void Window::Clear(Color clearColor) { _windowImpl->Clear(clearColor); }
+void Window::Display() { _windowImpl->Display(); }
 
 } // namespace Ren

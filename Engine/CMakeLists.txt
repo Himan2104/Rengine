@@ -28,8 +28,8 @@ add_library(rengine-af
         Source/Application/Window.cxx)
 
 set_target_properties(rengine-af PROPERTIES PREFIX "")
-target_include_directories(rengine-af PUBLIC ${RENGINE_INCLUDE_DIRS} ${SFML_INCLUDE_DIR})
-target_link_libraries(rengine-af PRIVATE rengine-core sfml-graphics)
+target_include_directories(rengine-af PUBLIC ${RENGINE_INCLUDE_DIRS} ${SFML_INCLUDE_DIR} ${IMGUI_DIR} ${IMGUI_SFML_INC_DIR})
+target_link_libraries(rengine-af PRIVATE rengine-core sfml-graphics ImGui-SFML::ImGui-SFML)
 
 add_library(rengine-mt
         Source/Multithreading/JobSystem.cxx)
@@ -43,3 +43,10 @@ add_library(rengine-gfx
 set_target_properties(rengine-gfx PROPERTIES PREFIX "")
 target_include_directories(rengine-gfx PUBLIC ${RENGINE_INCLUDE_DIRS} ${SFML_INCLUDE_DIR})
 target_link_libraries(rengine-gfx PRIVATE rengine-core sfml-graphics)
+
+add_library(rengine-editor
+        Source/Editor/MainEditorUI.cxx)
+
+set_target_properties(rengine-editor PROPERTIES PREFIX "")
+target_include_directories(rengine-editor PUBLIC ${RENGINE_INCLUDE_DIRS} ${SFML_INCLUDE_DIR} ${IMGUI_DIR})
+target_link_libraries(rengine-editor PRIVATE rengine-core sfml-graphics ImGui-SFML::ImGui-SFML)

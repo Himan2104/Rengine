@@ -1,5 +1,6 @@
 #pragma once
 
+#include <Rengine/Config.hxx>
 #include <cstdint>
 #include <stdfloat>
 

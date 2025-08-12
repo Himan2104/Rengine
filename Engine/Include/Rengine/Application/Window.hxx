@@ -1,6 +1,7 @@
 #pragma once
 
 #include <Rengine/Application/Resolution.hxx>
+#include <Rengine/Core/Color.hxx>
 #include <Rengine/Core/Definitions.hxx>
 #include <Rengine/Core/EventSystem.hxx>
 #include <Rengine/Core/Math/Vector2.hxx>
@@ -30,6 +31,8 @@ public:
     [[nodiscard]] const std::string& GetTitle() const;
     void SetWindowMode(WindowMode windowMode);
     [[nodiscard]] WindowMode GetWindowMode() const;
+    void Clear(Color clearColor = Color::Black);
+    void Display();
 
 private:
     class WindowImpl* _windowImpl = nullptr;

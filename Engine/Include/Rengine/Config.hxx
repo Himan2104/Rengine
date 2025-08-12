@@ -44,3 +44,6 @@
 #endif
 
 #define REN_API REN_IMPORT
+
+// TODO: remove this hard define
+#define REN_ENABLE_IMGUI
