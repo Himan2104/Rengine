@@ -1,3 +1,5 @@
+#include "Rengine/Editor/StatusProvider.hxx"
+#include "Rengine/Graphics/RenderFlags.hxx"
 #include <Rengine/Editor/MainEditorUI.hxx>
 
 namespace Ren::Editor
@@ -164,9 +166,9 @@ void MainEditorUI::RenderMenuBar()
     {
         // Sort menu providers by priority
         std::vector<IMenuProvider*> sortedProviders;
-        for (auto& provider : m_menuProviders) { sortedProviders.push_back(provider.get()); }
+        for (auto& provider : _menuProviders) { sortedProviders.push_back(provider.get()); }
         std::sort(sortedProviders.begin(), sortedProviders.end(),
-                  [](IMenuProvider* a, IMenuProvider* b) { return a->GetMenuPriority() < b->GetMenuPriority(); });
+                  [](IMenuProvider* a, IMenuProvider* b) { return a->GetPriority() < b->GetPriority(); });
 
         // Render all menu providers
         for (auto* provider : sortedProviders) { provider->RenderMenu(); }
@@ -177,12 +179,12 @@ void MainEditorUI::RenderMenuBar()
 
 void MainEditorUI::RenderWindows()
 {
-    for (auto& window : m_windows)
+    for (auto& window : _editorWindows)
     {
         if (window->IsVisible())
         {
             bool visible = true;
-            if (ImGui::Begin(window->GetWindowName(), &visible, window->GetWindowFlags())) { window->Render(); }
+            if (ImGui::Begin(window->GetName().data(), &visible, window->GetWindowFlags())) { window->Render(); }
 
             if (!visible && window->IsVisible())
             {
@@ -201,51 +203,98 @@ void MainEditorUI::RenderStatusBar()
     ImVec2 work_pos         = viewport->WorkPos;
     ImVec2 work_size        = viewport->WorkSize;
 
-    ImGui::SetNextWindowPos(ImVec2(work_pos.x, work_pos.y + work_size.y - 25));
-    ImGui::SetNextWindowSize(ImVec2(work_size.x, 25));
+    ImGui::SetNextWindowPos(ImVec2(work_pos.x, work_pos.y + work_size.y - STATUS_BAR_HEIGHT));
+    ImGui::SetNextWindowSize(ImVec2(work_size.x, STATUS_BAR_HEIGHT));
 
     ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove |
         ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoDocking;
 
-    if (ImGui::Begin("StatusBar", nullptr, window_flags))
-    {
-        // Sort status providers by priority
-        std::vector<IStatusProvider*> sortedProviders;
-        for (auto& provider : m_statusProviders) { sortedProviders.push_back(provider.get()); }
-        std::sort(sortedProviders.begin(), sortedProviders.end(),
-                  [](IStatusProvider* a, IStatusProvider* b) { return a->GetStatusPriority() < b->GetStatusPriority(); });
+    if (ImGui::Begin("StatusBar", nullptr, window_flags)) { RenderStatusBarContent(); }
+    ImGui::End();
+}
 
-        // Render status providers
-        for (size_t i = 0; i < sortedProviders.size(); ++i)
+void MainEditorUI::RenderStatusBarContent()
+{
+    float totalWidth = ImGui::GetContentRegionAvail().x;
+
+    // Render left-aligned items (already grouped and sorted)
+    RenderStatusGroup(_statusProvidersLeftAligned);
+
+    // Render center-aligned items
+    if (!_statusProvidersCenterAligned.IsEmpty())
+    {
+        float centerWidth = CalculateGroupWidth(_statusProvidersCenterAligned);
+        float centerStart = (totalWidth - centerWidth) * 0.5f;
+        float currentPos  = ImGui::GetCursorPosX();
+
+        if (centerStart > currentPos) { ImGui::SetCursorPosX(centerStart); }
+        else
         {
-            if (i > 0)
-            {
-                ImGui::SameLine();
-                ImGui::Text(" | ");
-                ImGui::SameLine();
-            }
-            sortedProviders[i]->RenderStatus();
+            ImGui::SameLine();
+            ImGui::Text(" | ");
+            ImGui::SameLine();
         }
 
-        ImGui::End();
+        RenderStatusGroup(_statusProvidersCenterAligned);
+    }
+
+    // Render right-aligned items
+    if (!_statusProvidersRightAligned.IsEmpty())
+    {
+        float rightWidth = CalculateGroupWidth(_statusProvidersRightAligned);
+        float rightStart = totalWidth - rightWidth;
+        ImGui::SetCursorPosX(rightStart);
+        RenderStatusGroup(_statusProvidersRightAligned);
     }
 }
 
-// Management functions
-void MainEditorUI::AddWindow(std::unique_ptr<IEditorWindow> window) { m_windows.PushBack(std::move(window)); }
+void MainEditorUI::RenderStatusGroup(const DynamicArray<std::unique_ptr<IStatusProvider>>& providers)
+{
+    for (size_t i = 0; i < providers.Size(); ++i)
+    {
+        if (i > 0)
+        {
+            ImGui::SameLine();
+            ImGui::Text(" | ");
+            ImGui::SameLine();
+        }
+        providers[i]->Render();
+    }
+}
 
-void MainEditorUI::AddMenuProvider(std::unique_ptr<IMenuProvider> provider) { m_menuProviders.PushBack(std::move(provider)); }
+Float32 MainEditorUI::CalculateGroupWidth(const DynamicArray<std::unique_ptr<IStatusProvider>>& providers)
+{
+    float totalWidth = 0.0f;
+    for (size_t i = 0; i < providers.Size(); ++i)
+    {
+        if (i > 0) { totalWidth += ImGui::CalcTextSize(" | ").x; }
+
+        float providerWidth = providers[i]->GetWidth();
+        totalWidth += (providerWidth < 0) ? 100.0f : providerWidth;
+    }
+    return totalWidth;
+}
+
+// Management functions
+void MainEditorUI::AddWindow(std::unique_ptr<IEditorWindow> window) { _editorWindows.PushBack(std::move(window)); }
+
+void MainEditorUI::AddMenuProvider(std::unique_ptr<IMenuProvider> provider) { _menuProviders.PushBack(std::move(provider)); }
 
 void MainEditorUI::AddStatusProvider(std::unique_ptr<IStatusProvider> provider)
 {
-    m_statusProviders.PushBack(std::move(provider));
+    switch (provider->GetAlignment())
+    {
+    case Ren::Editor::StatusItemAlignment::Left: _statusProvidersLeftAligned.PushBack(std::move(provider)); break;
+    case Ren::Editor::StatusItemAlignment::Center: _statusProvidersCenterAligned.PushBack(std::move(provider)); break;
+    case Ren::Editor::StatusItemAlignment::Right: _statusProvidersRightAligned.PushBack(std::move(provider)); break;
+    }
 }
 
 void MainEditorUI::ShowWindow(const std::string& windowName, bool show)
 {
-    for (auto& window : m_windows)
+    for (auto& window : _editorWindows)
     {
-        if (std::string(window->GetWindowName()) == windowName)
+        if (std::string(window->GetName()) == windowName)
         {
             bool wasVisible = window->IsVisible();
             window->SetVisible(show);

@@ -1,20 +1,21 @@
 #pragma once
 
+#include "Rengine/Core/Definitions.hxx"
 #include "Rengine/Core/Log.hxx"
-#include <Rengine/Editor/IEditorWindow.hxx>
-#include <Rengine/Editor/IMenuProvider.hxx>
-#include <Rengine/Editor/IStatusProvider.hxx>
+#include <Rengine/Editor/EditorWindow.hxx>
+#include <Rengine/Editor/MenuProvider.hxx>
+#include <Rengine/Editor/StatusProvider.hxx>
 #include <chrono>
+#include <imgui.h>
 #include <string>
 #include <vector>
 
 namespace Ren::Editor
 {
 // Example 1: Properties Window
-class PropertiesWindow : public IEditorWindow
+class PropertiesWindow : public EditorWindow<"Properties", ImGuiWindowFlags_None>
 {
 private:
-    bool m_visible         = true;
     float m_floatValue     = 0.0f;
     int m_intValue         = 0;
     ImVec4 m_colorValue    = ImVec4(1.0f, 1.0f, 1.0f, 1.0f);
@@ -39,71 +40,57 @@ public:
             strcpy(m_textBuffer, "Hello World");
         }
     }
-
-    const char* GetWindowName() const override { return "Properties"; }
-    bool IsVisible() const override { return m_visible; }
-    void SetVisible(bool visible) override { m_visible = visible; }
 };
 
 // Example 2: Scene Hierarchy Window
-class SceneHierarchyWindow : public IEditorWindow
+class EntitiesWindow : public EditorWindow<"Entities", ImGuiWindowFlags_None>
 {
 private:
-    bool m_visible                         = true;
-    std::vector<std::string> m_gameObjects = {"Main Camera", "Directional Light", "Player",        "Enemy1",      "Enemy2",
-                                              "Terrain",     "UI Canvas",         "Audio Manager", "Game Manager"};
-    int m_selectedObject                   = -1;
+    std::vector<std::string> _entities = {"Main Camera", "Directional Light", "Player",        "Enemy1",      "Enemy2",
+                                          "Terrain",     "UI Canvas",         "Audio Manager", "Game Manager"};
+    int _selectedObject                = -1;
 
 public:
     void Render() override
     {
-        ImGui::Text("Scene Hierarchy");
-        ImGui::Separator();
-
-        for (int i = 0; i < m_gameObjects.size(); ++i)
+        for (int i = 0; i < _entities.size(); ++i)
         {
-            bool isSelected = (m_selectedObject == i);
-            if (ImGui::Selectable(m_gameObjects[i].c_str(), isSelected)) { m_selectedObject = i; }
+            bool isSelected = (_selectedObject == i);
+            if (ImGui::Selectable(_entities[i].c_str(), isSelected)) { _selectedObject = i; }
 
             if (ImGui::BeginPopupContextItem())
             {
                 if (ImGui::MenuItem("Delete"))
                 {
-                    m_gameObjects.erase(m_gameObjects.begin() + i);
-                    m_selectedObject = -1;
+                    _entities.erase(_entities.begin() + i);
+                    _selectedObject = -1;
                 }
-                if (ImGui::MenuItem("Duplicate"))
-                {
-                    m_gameObjects.insert(m_gameObjects.begin() + i + 1, m_gameObjects[i] + " Copy");
-                }
+                if (ImGui::MenuItem("Duplicate")) { _entities.insert(_entities.begin() + i + 1, _entities[i] + " Copy"); }
                 ImGui::EndPopup();
             }
         }
 
         ImGui::Separator();
-        if (ImGui::Button("Add GameObject")) { m_gameObjects.push_back("New GameObject"); }
+        if (ImGui::Button("Add GameObject")) { _entities.push_back("New GameObject"); }
     }
-
-    const char* GetWindowName() const override { return "Scene Hierarchy"; }
-    bool IsVisible() const override { return m_visible; }
-    void SetVisible(bool visible) override { m_visible = visible; }
 };
 
 // Example 3: Console Window
-class ConsoleWindow : public IEditorWindow
+class ConsoleWindow : public EditorWindow<"Console", ImGuiFocusedFlags_None>
 {
+public:
+    class ConsoleLogChannel : public ILogChannel
+    {
+        void OnLogged(const LogEntry& log) override {}
+    };
+
 private:
-    bool m_visible = true;
     std::vector<std::string> m_logs;
     char m_inputBuffer[256] = "";
     bool m_autoScroll       = true;
 
 public:
-    ConsoleWindow()
-    {
-        m_logs.push_back("[INFO] Console initialized");
-        m_logs.push_back("[DEBUG] System ready");
-    }
+    ConsoleWindow() { LogSystem::GetInstance().AddChannel<IsChannel T>() }
 
     void Render() override
     {
@@ -150,10 +137,6 @@ public:
         }
     }
 
-    const char* GetWindowName() const override { return "Console"; }
-    bool IsVisible() const override { return m_visible; }
-    void SetVisible(bool visible) override { m_visible = visible; }
-
     void AddLog(const std::string& log)
     {
         auto now    = std::chrono::system_clock::now();
@@ -167,62 +150,8 @@ public:
     }
 };
 
-// Example 4: Asset Browser Window
-class AssetBrowserWindow : public IEditorWindow
-{
-private:
-    bool m_visible                    = true;
-    std::vector<std::string> m_assets = {"player_texture.png",   "enemy_model.fbx",    "background_music.wav",
-                                         "ui_font.ttf",          "level_data.json",    "shader_vertex.glsl",
-                                         "particle_effect.json", "animation_walk.anim"};
-    std::string m_currentFilter       = "";
-    char m_filterBuffer[128]          = "";
-
-public:
-    void Render() override
-    {
-        ImGui::Text("Asset Browser");
-        ImGui::Separator();
-
-        // Filter
-        if (ImGui::InputText("Filter", m_filterBuffer, sizeof(m_filterBuffer)))
-        {
-            m_currentFilter = std::string(m_filterBuffer);
-        }
-
-        ImGui::Separator();
-
-        // Asset grid
-        int columns = (int)(ImGui::GetContentRegionAvail().x / 120.0f);
-        columns     = std::max(1, columns);
-
-        for (int i = 0; i < m_assets.size(); ++i)
-        {
-            if (!m_currentFilter.empty() && m_assets[i].find(m_currentFilter) == std::string::npos) { continue; }
-
-            ImGui::BeginGroup();
-            ImGui::Button("###asset", ImVec2(100, 80)); // Placeholder for asset thumbnail
-            ImGui::TextWrapped("%s", m_assets[i].c_str());
-            ImGui::EndGroup();
-
-            if (ImGui::BeginDragDropSource())
-            {
-                ImGui::SetDragDropPayload("ASSET", m_assets[i].c_str(), m_assets[i].length() + 1);
-                ImGui::Text("Dragging %s", m_assets[i].c_str());
-                ImGui::EndDragDropSource();
-            }
-
-            if ((i + 1) % columns != 0 && i < m_assets.size() - 1) { ImGui::SameLine(); }
-        }
-    }
-
-    const char* GetWindowName() const override { return "Asset Browser"; }
-    bool IsVisible() const override { return m_visible; }
-    void SetVisible(bool visible) override { m_visible = visible; }
-};
-
 // Example 1: File Menu Provider
-class FileMenuProvider : public IMenuProvider
+class FileMenuProvider : public MenuProvider<"File", 0>
 {
 public:
     void RenderMenu() override
@@ -258,13 +187,10 @@ public:
             ImGui::EndMenu();
         }
     }
-
-    const char* GetMenuName() const override { return "File"; }
-    int GetMenuPriority() const override { return 10; }
 };
 
 // Example 2: Edit Menu Provider
-class EditMenuProvider : public IMenuProvider
+class EditMenuProvider : public MenuProvider<"Edit", 1>
 {
 public:
     void RenderMenu() override
@@ -300,13 +226,10 @@ public:
             ImGui::EndMenu();
         }
     }
-
-    const char* GetMenuName() const override { return "Edit"; }
-    int GetMenuPriority() const override { return 20; }
 };
 
 // Example 3: View Menu Provider
-class ViewMenuProvider : public IMenuProvider
+class ViewMenuProvider : public MenuProvider<"View", 4>
 {
 public:
     void RenderMenu() override
@@ -333,13 +256,10 @@ public:
             ImGui::EndMenu();
         }
     }
-
-    const char* GetMenuName() const override { return "View"; }
-    int GetMenuPriority() const override { return 30; }
 };
 
 // Example 4: Tools Menu Provider
-class ToolsMenuProvider : public IMenuProvider
+class ToolsMenuProvider : public MenuProvider<"Tools", 3>
 {
 public:
     void RenderMenu() override
@@ -379,18 +299,15 @@ public:
             ImGui::EndMenu();
         }
     }
-
-    const char* GetMenuName() const override { return "Tools"; }
-    int GetMenuPriority() const override { return 40; }
 };
 
 // Example 1: System Info Status Provider
-class SystemInfoStatusProvider : public IStatusProvider
+class SystemInfoStatusProvider : public StatusProvider<"SysInfo", 0, StatusItemAlignment::Right>
 {
 private:
-    float m_cpuUsage     = 0.0f;
-    size_t m_memoryUsage = 0;
-    size_t m_totalMemory = 0;
+    Float32 _cpuUsage   = 0.0f;
+    UInt16 _memoryUsage = 0;
+    UInt16 _totalMemory = 0;
 
     void UpdateSystemInfo()
     {
@@ -406,44 +323,31 @@ private:
     }
 
 public:
-    void RenderStatus() override
+    void Render() override
     {
         UpdateSystemInfo();
-        ImGui::Text("CPU: %.1f%%", m_cpuUsage);
+        ImGui::Text("CPU: %.1f%%", _cpuUsage);
         ImGui::SameLine();
-        ImGui::Text("Memory: %zu/%zu MB", m_memoryUsage, m_totalMemory);
+        ImGui::Text("Memory: %u/%u MB", _memoryUsage, _totalMemory);
     }
 
-    int GetStatusPriority() const override { return 10; }
+    Float32 GetWidth() const override { return 60.0f; }
 };
 
 // Example 2: Project Status Provider
-class ProjectStatusProvider : public IStatusProvider
+class ProjectStatusProvider : public StatusProvider<"Project", 1, StatusItemAlignment::Right>
 {
 private:
-    std::string m_projectName = "MyProject";
-    std::string m_currentFile = "main.cpp";
-    bool m_hasUnsavedChanges  = false;
+    std::string _projectName = "Rengine";
+    bool _hasUnsavedChanges  = false;
 
 public:
-    void RenderStatus() override
-    {
-        ImGui::Text("Project: %s", m_projectName.c_str());
-        ImGui::SameLine();
-        ImGui::Text("File: %s%s", m_currentFile.c_str(), m_hasUnsavedChanges ? "*" : "");
-    }
-
-    int GetStatusPriority() const override { return 20; }
-
-    void SetCurrentFile(const std::string& filename, bool unsaved = false)
-    {
-        m_currentFile       = filename;
-        m_hasUnsavedChanges = unsaved;
-    }
+    void Render() override { ImGui::Text("Project: %s", (_projectName + (_hasUnsavedChanges ? "*" : "")).c_str()); }
+    Float32 GetWidth() const override { return 60.0f; }
 };
 
 // Example 3: Build Status Provider
-class BuildStatusProvider : public IStatusProvider
+class BuildStatusProvider : public StatusProvider<"BuildStatus", 2, StatusItemAlignment::Left>
 {
 private:
     enum class BuildState
@@ -459,7 +363,7 @@ private:
     int m_warningCount         = 0;
 
 public:
-    void RenderStatus() override
+    void Render() override
     {
         ImVec4 color = ImVec4(1, 1, 1, 1);
 
@@ -487,8 +391,6 @@ public:
         }
     }
 
-    int GetStatusPriority() const override { return 30; }
-
     void SetBuildState(BuildState state, const std::string& message = "", int errors = 0, int warnings = 0)
     {
         m_buildState   = state;
@@ -496,13 +398,15 @@ public:
         m_errorCount   = errors;
         m_warningCount = warnings;
     }
+
+    Float32 GetWidth() const override { return 60.0f; }
 };
 
 // Example 4: Clock Status Provider
-class ClockStatusProvider : public IStatusProvider
+class ClockStatusProvider : public StatusProvider<"Clock", 3, StatusItemAlignment::Right>
 {
 public:
-    void RenderStatus() override
+    void Render() override
     {
         auto now    = std::chrono::system_clock::now();
         auto time_t = std::chrono::system_clock::to_time_t(now);
@@ -511,7 +415,7 @@ public:
         ImGui::Text("%.2d:%.2d:%.2d", tm.tm_hour, tm.tm_min, tm.tm_sec);
     }
 
-    int GetStatusPriority() const override { return 1000; } // Far right
+    Float32 GetWidth() const override { return 60.0f; }
 };
 
 } // namespace Ren::Editor

@@ -73,6 +73,7 @@ public:
 
     void Close()
     {
+        ImGui::SFML::Shutdown(*_window);
         _window->close();
         delete _window;
         _window = nullptr;

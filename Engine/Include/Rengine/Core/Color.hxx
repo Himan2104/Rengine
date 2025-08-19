@@ -30,13 +30,17 @@ public:
     static const Color Magenta;
 };
 
-[[nodiscard]] constexpr bool operator==(Color lhs, Color rhs) { return (lhs.r == rhs.r) && (lhs.g == rhs.g) && (lhs.b == rhs.b) && (lhs.a == rhs.a); }
+[[nodiscard]] constexpr bool operator==(Color lhs, Color rhs)
+{
+    return (lhs.r == rhs.r) && (lhs.g == rhs.g) && (lhs.b == rhs.b) && (lhs.a == rhs.a);
+}
 
 [[nodiscard]] constexpr bool operator!=(Color lhs, Color rhs) { return !(lhs == rhs); }
 
 } // namespace Ren
 
-template <> struct std::formatter<Ren::Color>
+template <>
+struct std::formatter<Ren::Color>
 {
     auto format(const Ren::Color& color, std::format_context& ctx) const
     {

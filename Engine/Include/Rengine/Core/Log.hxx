@@ -42,7 +42,11 @@ class LogSystem
 public:
     static LogSystem& GetInstance();
 
-    template <IsChannel T> void AddChannel() { _logChannels.push_back(new T()); }
+    template <IsChannel T>
+    void AddChannel()
+    {
+        _logChannels.push_back(new T());
+    }
 
     void Log(std::string_view msg, LogType logType);
 
@@ -54,3 +58,12 @@ private:
     std::vector<ILogChannel*> _logChannels{};
 };
 } // namespace Ren
+
+template <>
+struct std::formatter<Ren::LogEntry>
+{
+    auto format(const Ren::LogEntry& logEntry, std::format_context& ctx) const
+    {
+        return std::format_to(ctx.out(), "[{:%Y-%m-%d %X}] [{}] {}", logEntry.timestamp, logEntry.logType, logEntry.message);
+    }
+};

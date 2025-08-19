@@ -1,6 +1,6 @@
-#include "Rengine/Editor/MainEditorUI.hxx"
 #include <DemoArtifacts.hxx>
 #include <EditorApplication.hxx>
+#include <Rengine/Editor/MainEditorUI.hxx>
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <imgui-SFML.h>
 #include <imgui.h>
@@ -31,7 +31,7 @@ void EditorApplication::Run()
     Editor::MainEditorUI editor;
 
     editor.AddWindow(std::make_unique<Editor::PropertiesWindow>());
-    editor.AddWindow(std::make_unique<Editor::SceneHierarchyWindow>());
+    editor.AddWindow(std::make_unique<Editor::EntitiesWindow>());
     editor.AddWindow(std::make_unique<Editor::ConsoleWindow>());
 
     // Add menu providers
