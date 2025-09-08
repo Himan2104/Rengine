@@ -19,6 +19,7 @@ add_compile_definitions(REN_VERSION=${PROJECT_VERSION})
 add_compile_definitions(REN_VERSION_MAJOR=${PROJECT_VERSION_MAJOR})
 add_compile_definitions(REN_VERSION_MINOR=${PROJECT_VERSION_MINOR})
 add_compile_definitions(REN_VERSION_PATCH=${PROJECT_VERSION_PATCH})
+add_compile_definitions(IMGUI_USE_WCHAR32)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 

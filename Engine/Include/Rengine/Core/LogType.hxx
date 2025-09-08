@@ -14,7 +14,8 @@ enum class LogType
 };
 } // namespace Ren
 
-template <> struct std::formatter<Ren::LogType> : std::formatter<std::string_view>
+template <>
+struct std::formatter<Ren::LogType> : std::formatter<std::string_view>
 {
     auto format(Ren::LogType logType, std::format_context& ctx) const
     {

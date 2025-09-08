@@ -81,24 +81,33 @@ class ConsoleWindow : public EditorWindow<"Console", ImGuiFocusedFlags_None>
 public:
     class ConsoleLogChannel : public ILogChannel
     {
-        void OnLogged(const LogEntry& log) override {}
+    public:
+        constexpr ConsoleLogChannel(ConsoleWindow* cw)
+            : _consoleWindow{cw}
+        {
+        }
+
+        constexpr void OnLogged(const LogEntry& log) override { _consoleWindow->AddLog(std::format("{}", log)); }
+
+    private:
+        ConsoleWindow* _consoleWindow{nullptr};
     };
 
 private:
-    std::vector<std::string> m_logs;
-    char m_inputBuffer[256] = "";
-    bool m_autoScroll       = true;
+    std::vector<std::string> _logs;
+    char _inputBuffer[256] = "";
+    bool _autoScroll       = true;
 
 public:
-    ConsoleWindow() { LogSystem::GetInstance().AddChannel<IsChannel T>() }
+    constexpr ConsoleWindow() { LogSystem::GetInstance().AddChannel<ConsoleLogChannel>(this); }
 
     void Render() override
     {
         ImGui::Text("Console");
         ImGui::SameLine();
-        if (ImGui::SmallButton("Clear")) { m_logs.clear(); }
+        if (ImGui::SmallButton("Clear")) { _logs.clear(); }
         ImGui::SameLine();
-        ImGui::Checkbox("Auto-scroll", &m_autoScroll);
+        ImGui::Checkbox("Auto-scroll", &_autoScroll);
 
         ImGui::Separator();
 
@@ -106,7 +115,7 @@ public:
         ImGui::BeginChild("ScrollingRegion", ImVec2(0, -ImGui::GetFrameHeightWithSpacing()), false,
                           ImGuiWindowFlags_HorizontalScrollbar);
 
-        for (const auto& log : m_logs)
+        for (const auto& log : _logs)
         {
             ImVec4 color = ImVec4(1, 1, 1, 1);
             if (log.find("[ERROR]") != std::string::npos)
@@ -121,33 +130,22 @@ public:
             ImGui::PopStyleColor();
         }
 
-        if (m_autoScroll && ImGui::GetScrollY() >= ImGui::GetScrollMaxY()) { ImGui::SetScrollHereY(1.0f); }
+        if (_autoScroll && ImGui::GetScrollY() >= ImGui::GetScrollMaxY()) { ImGui::SetScrollHereY(1.0f); }
 
         ImGui::EndChild();
 
         // Command input
-        if (ImGui::InputText("Command", m_inputBuffer, sizeof(m_inputBuffer), ImGuiInputTextFlags_EnterReturnsTrue))
+        if (ImGui::InputText("Command", _inputBuffer, sizeof(_inputBuffer), ImGuiInputTextFlags_EnterReturnsTrue))
         {
-            if (strlen(m_inputBuffer) > 0)
+            if (strlen(_inputBuffer) > 0)
             {
-                m_logs.push_back(std::string("> ") + m_inputBuffer);
-                m_logs.push_back("[INFO] Command executed: " + std::string(m_inputBuffer));
-                m_inputBuffer[0] = '\0';
+                REN_LOG_INFO(_inputBuffer);
+                _inputBuffer[0] = '\0';
             }
         }
     }
 
-    void AddLog(const std::string& log)
-    {
-        auto now    = std::chrono::system_clock::now();
-        auto time_t = std::chrono::system_clock::to_time_t(now);
-        auto tm     = *std::localtime(&time_t);
-
-        char timestamp[64];
-        sprintf(timestamp, "[%02d:%02d:%02d] ", tm.tm_hour, tm.tm_min, tm.tm_sec);
-
-        m_logs.push_back(std::string(timestamp) + log);
-    }
+    constexpr void AddLog(const std::string& log) { _logs.push_back(log); }
 };
 
 // Example 1: File Menu Provider
@@ -302,7 +300,7 @@ public:
 };
 
 // Example 1: System Info Status Provider
-class SystemInfoStatusProvider : public StatusProvider<"SysInfo", 0, StatusItemAlignment::Right>
+class SystemInfoStatusProvider : public StatusProvider<"SysInfo", 0>
 {
 private:
     Float32 _cpuUsage   = 0.0f;
@@ -331,11 +329,11 @@ public:
         ImGui::Text("Memory: %u/%u MB", _memoryUsage, _totalMemory);
     }
 
-    Float32 GetWidth() const override { return 60.0f; }
+    Float32 GetWidth() const override { return 100.0f; }
 };
 
 // Example 2: Project Status Provider
-class ProjectStatusProvider : public StatusProvider<"Project", 1, StatusItemAlignment::Right>
+class ProjectStatusProvider : public StatusProvider<"Project", 1>
 {
 private:
     std::string _projectName = "Rengine";
@@ -343,11 +341,11 @@ private:
 
 public:
     void Render() override { ImGui::Text("Project: %s", (_projectName + (_hasUnsavedChanges ? "*" : "")).c_str()); }
-    Float32 GetWidth() const override { return 60.0f; }
+    Float32 GetWidth() const override { return 100.0f; }
 };
 
 // Example 3: Build Status Provider
-class BuildStatusProvider : public StatusProvider<"BuildStatus", 2, StatusItemAlignment::Left>
+class BuildStatusProvider : public StatusProvider<"BuildStatus", 2>
 {
 private:
     enum class BuildState
@@ -403,7 +401,7 @@ public:
 };
 
 // Example 4: Clock Status Provider
-class ClockStatusProvider : public StatusProvider<"Clock", 3, StatusItemAlignment::Right>
+class ClockStatusProvider : public StatusProvider<"Clock", 3>
 {
 public:
     void Render() override

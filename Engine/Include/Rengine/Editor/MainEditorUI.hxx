@@ -6,33 +6,13 @@
 #include <Rengine/Editor/MenuProvider.hxx>
 #include <Rengine/Editor/StatusProvider.hxx>
 #include <memory>
+#include <string>
 
 namespace Ren::Editor
 {
 
 class MainEditorUI
 {
-private:
-    constexpr static Float32 STATUS_BAR_HEIGHT = 25.0f;
-    DynamicArray<std::unique_ptr<IEditorWindow>> _editorWindows;
-    DynamicArray<std::unique_ptr<IMenuProvider>> _menuProviders;
-    DynamicArray<std::unique_ptr<IStatusProvider>> _statusProvidersLeftAligned;
-    DynamicArray<std::unique_ptr<IStatusProvider>> _statusProvidersRightAligned;
-    DynamicArray<std::unique_ptr<IStatusProvider>> _statusProvidersCenterAligned;
-
-    // System info
-    float m_cpuUsage     = 0.0f;
-    size_t m_memoryUsage = 0;
-    size_t m_totalMemory = 0;
-
-    void RenderMenuBar();
-    void RenderStatusBar();
-    void RenderWindows();
-
-    void RenderStatusBarContent();
-    void RenderStatusGroup(const DynamicArray<std::unique_ptr<IStatusProvider>>& providers);
-    Float32 CalculateGroupWidth(const DynamicArray<std::unique_ptr<IStatusProvider>>& providers);
-
 public:
     MainEditorUI();
     ~MainEditorUI() = default;
@@ -51,6 +31,28 @@ public:
 
     void ShowWindow(const std::string& windowName, bool show = true);
     void ToggleWindow(const std::string& windowName);
+
+private:
+    void RenderMenuBar();
+    void RenderStatusBar();
+    void RenderWindows();
+
+    void RenderStatusBarContent();
+
+    void LoadDefaultWindowsAndProviders();
+
+public:
+    constexpr static Float32 kStatusBarHeight = 25.0f;
+
+private:
+    DynamicArray<std::unique_ptr<IEditorWindow>> _editorWindows;
+    DynamicArray<std::unique_ptr<IMenuProvider>> _menuProviders;
+    DynamicArray<std::unique_ptr<IStatusProvider>> _statusProviders;
+
+    // System info
+    float m_cpuUsage     = 0.0f;
+    size_t m_memoryUsage = 0;
+    size_t m_totalMemory = 0;
 };
 
 } // namespace Ren::Editor

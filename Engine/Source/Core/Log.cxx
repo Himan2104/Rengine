@@ -17,10 +17,10 @@ void LogSystem::Log(std::string_view msg, LogType logType)
 {
     LogEntry logEntry{.logType = logType, .message = msg, .timestamp = std::chrono::system_clock::now()};
     _logs.push_back(logEntry);
-    auto strlog = std::format("[{:%Y-%m-%d %X}] [{}] {}", logEntry.timestamp, logType, msg);
+    auto strlog = std::format("{}", logEntry);
     std::cout << strlog << "\n";
 
-    // TODO: Implement Channels
+    for (auto& channel : _logChannels) { channel->OnLogged(logEntry); }
 }
 
 } // namespace Ren

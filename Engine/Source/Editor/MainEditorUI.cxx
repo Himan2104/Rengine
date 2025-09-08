@@ -1,6 +1,13 @@
+#include "InBuiltEditorWindows/ThemeEditor.hxx"
+#include "Rengine/Core/Definitions.hxx"
+#include "Rengine/Core/Log.hxx"
 #include "Rengine/Editor/StatusProvider.hxx"
 #include "Rengine/Graphics/RenderFlags.hxx"
+#include "imgui-SFML.h"
+#include <Rengine/Editor/Icons.hxx>
 #include <Rengine/Editor/MainEditorUI.hxx>
+#include <cstddef>
+#include <imgui.h>
 
 namespace Ren::Editor
 {
@@ -13,6 +20,25 @@ MainEditorUI::MainEditorUI()
     io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
     io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
 
+    io.Fonts->Clear();
+
+    ImFontConfig config;
+    config.PixelSnapH = true;
+    //  config.MergeMode                   = true;
+    // config.OversampleH = 1;
+    config.GlyphOffset.x          = 3.0f;
+    static const ImWchar ranges[] = {0x0020,   0x00FF,   // Basic Latin + Latin Supplement
+                                     0x0100,   0x017F,   // Latin Extended-A
+                                     0x0180,   0x024F,   // Latin Extended-B
+                                     0x1E00,   0x1EFF,   // Latin Extended Additional
+                                     ICON_MIN, ICON_MAX, // Your NerdFont icons
+                                     0};
+    io.Fonts->AddFontFromFileTTF("C:\\Users\\Himan\\AppData\\Local\\Microsoft\\Windows\\Fonts\\0xProtoNerdFont-Regular.ttf",
+                                 16.0f, &config, ranges);
+
+    io.Fonts->Build();
+    if (!ImGui::SFML::UpdateFontTexture()) REN_LOG_ERROR("ImGui::SFML::UpdateFontTexture returned false");
+
     ImGui::StyleColorsDark();
 
     ImGuiStyle& style = ImGui::GetStyle();
@@ -22,36 +48,36 @@ MainEditorUI::MainEditorUI()
         style.Colors[ImGuiCol_WindowBg].w = 1.0f;
     }
 
-    style.Alpha                            = 1.0f;
-    style.DisabledAlpha                    = 1.0f;
-    style.WindowPadding                    = ImVec2(12.0f, 12.0f);
-    style.WindowRounding                   = 0.0f;
-    style.WindowBorderSize                 = 0.0f;
-    style.WindowMinSize                    = ImVec2(20.0f, 20.0f);
-    style.WindowTitleAlign                 = ImVec2(0.5f, 0.5f);
-    style.WindowMenuButtonPosition         = ImGuiDir_None;
-    style.ChildRounding                    = 0.0f;
-    style.ChildBorderSize                  = 1.0f;
-    style.PopupRounding                    = 0.0f;
-    style.PopupBorderSize                  = 1.0f;
-    style.FramePadding                     = ImVec2(6.0f, 6.0f);
-    style.FrameRounding                    = 0.0f;
-    style.FrameBorderSize                  = 0.0f;
-    style.ItemSpacing                      = ImVec2(12.0f, 6.0f);
-    style.ItemInnerSpacing                 = ImVec2(6.0f, 3.0f);
-    style.CellPadding                      = ImVec2(12.0f, 6.0f);
-    style.IndentSpacing                    = 20.0f;
-    style.ColumnsMinSpacing                = 6.0f;
-    style.ScrollbarSize                    = 12.0f;
-    style.ScrollbarRounding                = 0.0f;
-    style.GrabMinSize                      = 12.0f;
-    style.GrabRounding                     = 0.0f;
-    style.TabRounding                      = 0.0f;
-    style.TabBorderSize                    = 0.0f;
-    style.TabCloseButtonMinWidthUnselected = 0.0f;
-    style.ColorButtonPosition              = ImGuiDir_Right;
-    style.ButtonTextAlign                  = ImVec2(0.5f, 0.5f);
-    style.SelectableTextAlign              = ImVec2(0.0f, 0.0f);
+    style.Alpha                     = 1.0f;
+    style.DisabledAlpha             = 1.0f;
+    style.WindowPadding             = ImVec2(12.0f, 12.0f);
+    style.WindowRounding            = 0.0f;
+    style.WindowBorderSize          = 0.0f;
+    style.WindowMinSize             = ImVec2(20.0f, 20.0f);
+    style.WindowTitleAlign          = ImVec2(0.5f, 0.5f);
+    style.WindowMenuButtonPosition  = ImGuiDir_None;
+    style.ChildRounding             = 0.0f;
+    style.ChildBorderSize           = 1.0f;
+    style.PopupRounding             = 0.0f;
+    style.PopupBorderSize           = 1.0f;
+    style.FramePadding              = ImVec2(6.0f, 6.0f);
+    style.FrameRounding             = 0.0f;
+    style.FrameBorderSize           = 0.0f;
+    style.ItemSpacing               = ImVec2(12.0f, 6.0f);
+    style.ItemInnerSpacing          = ImVec2(6.0f, 3.0f);
+    style.CellPadding               = ImVec2(12.0f, 6.0f);
+    style.IndentSpacing             = 20.0f;
+    style.ColumnsMinSpacing         = 6.0f;
+    style.ScrollbarSize             = 12.0f;
+    style.ScrollbarRounding         = 0.0f;
+    style.GrabMinSize               = 12.0f;
+    style.GrabRounding              = 0.0f;
+    style.TabRounding               = 0.0f;
+    style.TabBorderSize             = 0.0f;
+    style.TabMinWidthForCloseButton = 0.0f;
+    style.ColorButtonPosition       = ImGuiDir_Right;
+    style.ButtonTextAlign           = ImVec2(0.5f, 0.5f);
+    style.SelectableTextAlign       = ImVec2(0.0f, 0.0f);
 
     style.Colors[ImGuiCol_Text]                 = ImVec4(1.0f, 1.0f, 1.0f, 1.0f);
     style.Colors[ImGuiCol_TextDisabled]         = ImVec4(0.2745098173618317f, 0.3176470696926117f, 0.4509803950786591f, 1.0f);
@@ -108,17 +134,17 @@ MainEditorUI::MainEditorUI()
         ImVec4(0.196078434586525f, 0.1764705926179886f, 0.5450980663299561f, 0.501960813999176f);
     style.Colors[ImGuiCol_ModalWindowDimBg] =
         ImVec4(0.196078434586525f, 0.1764705926179886f, 0.5450980663299561f, 0.501960813999176f);
+
+    LoadDefaultWindowsAndProviders();
 }
 
 void MainEditorUI::RenderFrame()
 {
     ImGuiViewport* viewport = ImGui::GetMainViewport();
 
-    const float status_bar_height = 25.0f;
-
     // Adjust dockspace to exclude status bar area
     ImVec2 dockspace_pos  = viewport->WorkPos;
-    ImVec2 dockspace_size = ImVec2(viewport->WorkSize.x, viewport->WorkSize.y - status_bar_height);
+    ImVec2 dockspace_size = ImVec2(viewport->WorkSize.x, viewport->WorkSize.y - kStatusBarHeight);
 
     // Set window to cover viewport minus status bar
     ImGui::SetNextWindowPos(dockspace_pos);
@@ -164,14 +190,9 @@ void MainEditorUI::RenderMenuBar()
 {
     if (ImGui::BeginMainMenuBar())
     {
-        // Sort menu providers by priority
-        std::vector<IMenuProvider*> sortedProviders;
-        for (auto& provider : _menuProviders) { sortedProviders.push_back(provider.get()); }
-        std::sort(sortedProviders.begin(), sortedProviders.end(),
-                  [](IMenuProvider* a, IMenuProvider* b) { return a->GetPriority() < b->GetPriority(); });
+        ImGui::Text(ICON_COD_ACCOUNT);
 
-        // Render all menu providers
-        for (auto* provider : sortedProviders) { provider->RenderMenu(); }
+        for (auto& provider : _menuProviders) { provider->RenderMenu(); }
 
         ImGui::EndMainMenuBar();
     }
@@ -203,8 +224,8 @@ void MainEditorUI::RenderStatusBar()
     ImVec2 work_pos         = viewport->WorkPos;
     ImVec2 work_size        = viewport->WorkSize;
 
-    ImGui::SetNextWindowPos(ImVec2(work_pos.x, work_pos.y + work_size.y - STATUS_BAR_HEIGHT));
-    ImGui::SetNextWindowSize(ImVec2(work_size.x, STATUS_BAR_HEIGHT));
+    ImGui::SetNextWindowPos(ImVec2(work_pos.x, work_pos.y + work_size.y - kStatusBarHeight));
+    ImGui::SetNextWindowSize(ImVec2(work_size.x, kStatusBarHeight));
 
     ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove |
         ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoDocking;
@@ -215,86 +236,85 @@ void MainEditorUI::RenderStatusBar()
 
 void MainEditorUI::RenderStatusBarContent()
 {
-    float totalWidth = ImGui::GetContentRegionAvail().x;
+    if (_statusProviders.IsEmpty()) return;
 
-    // Render left-aligned items (already grouped and sorted)
-    RenderStatusGroup(_statusProvidersLeftAligned);
+    float totalWidth     = ImGui::GetContentRegionAvail().x;
+    size_t providerCount = _statusProviders.Size();
+    float textHeight     = ImGui::GetTextLineHeight();
+    float verticalCenter = (kStatusBarHeight - textHeight) * 0.5f;
 
-    // Render center-aligned items
-    if (!_statusProvidersCenterAligned.IsEmpty())
+    // Edge alignment with proper bounds checking
+    float leftMargin  = 8.0f;
+    float rightMargin = 80.0f; // Increased to account for text width of last element
+
+    if (providerCount == 1)
     {
-        float centerWidth = CalculateGroupWidth(_statusProvidersCenterAligned);
-        float centerStart = (totalWidth - centerWidth) * 0.5f;
-        float currentPos  = ImGui::GetCursorPosX();
+        // Single item - place at left margin
+        ImGui::SetCursorPos({leftMargin, verticalCenter});
+        ImGui::BeginGroup();
+        _statusProviders[0]->Render();
+        ImGui::EndGroup();
+        return;
+    }
 
-        if (centerStart > currentPos) { ImGui::SetCursorPosX(centerStart); }
+    // Calculate spacing for edge alignment with proper bounds
+    float usableWidth = totalWidth - leftMargin - rightMargin;
+    float spacing     = usableWidth / (providerCount - 1);
+
+    for (size_t i = 0; i < providerCount; ++i)
+    {
+        float xPos;
+
+        if (i == 0)
+        {
+            // First element - at left margin
+            xPos = leftMargin;
+        }
+        else if (i == providerCount - 1)
+        {
+            // Last element - positioned from right edge accounting for text width
+            xPos = totalWidth - rightMargin;
+        }
+        else
+        {
+            // Middle elements - evenly distributed
+            xPos = leftMargin + (i * spacing);
+        }
+
+        if (i == 0) { ImGui::SetCursorPos({xPos, verticalCenter}); }
         else
         {
             ImGui::SameLine();
-            ImGui::Text(" | ");
-            ImGui::SameLine();
+            ImGui::SetCursorPos({xPos, verticalCenter});
         }
 
-        RenderStatusGroup(_statusProvidersCenterAligned);
-    }
-
-    // Render right-aligned items
-    if (!_statusProvidersRightAligned.IsEmpty())
-    {
-        float rightWidth = CalculateGroupWidth(_statusProvidersRightAligned);
-        float rightStart = totalWidth - rightWidth;
-        ImGui::SetCursorPosX(rightStart);
-        RenderStatusGroup(_statusProvidersRightAligned);
+        ImGui::BeginGroup();
+        _statusProviders[i]->Render();
+        ImGui::EndGroup();
     }
 }
 
-void MainEditorUI::RenderStatusGroup(const DynamicArray<std::unique_ptr<IStatusProvider>>& providers)
-{
-    for (size_t i = 0; i < providers.Size(); ++i)
-    {
-        if (i > 0)
-        {
-            ImGui::SameLine();
-            ImGui::Text(" | ");
-            ImGui::SameLine();
-        }
-        providers[i]->Render();
-    }
-}
+void MainEditorUI::LoadDefaultWindowsAndProviders() { AddWindow(std::make_unique<IBEW::ThemeEditor>()); }
 
-Float32 MainEditorUI::CalculateGroupWidth(const DynamicArray<std::unique_ptr<IStatusProvider>>& providers)
-{
-    float totalWidth = 0.0f;
-    for (size_t i = 0; i < providers.Size(); ++i)
-    {
-        if (i > 0) { totalWidth += ImGui::CalcTextSize(" | ").x; }
-
-        float providerWidth = providers[i]->GetWidth();
-        totalWidth += (providerWidth < 0) ? 100.0f : providerWidth;
-    }
-    return totalWidth;
-}
-
-// Management functions
 void MainEditorUI::AddWindow(std::unique_ptr<IEditorWindow> window) { _editorWindows.PushBack(std::move(window)); }
 
-void MainEditorUI::AddMenuProvider(std::unique_ptr<IMenuProvider> provider) { _menuProviders.PushBack(std::move(provider)); }
+void MainEditorUI::AddMenuProvider(std::unique_ptr<IMenuProvider> provider)
+{
+    _menuProviders.PushBack(std::move(provider));
+    std::sort(_menuProviders.begin(), _menuProviders.end(),
+              [](auto& a, auto& b) { return a->GetPriority() < b->GetPriority(); });
+}
 
 void MainEditorUI::AddStatusProvider(std::unique_ptr<IStatusProvider> provider)
 {
-    switch (provider->GetAlignment())
-    {
-    case Ren::Editor::StatusItemAlignment::Left: _statusProvidersLeftAligned.PushBack(std::move(provider)); break;
-    case Ren::Editor::StatusItemAlignment::Center: _statusProvidersCenterAligned.PushBack(std::move(provider)); break;
-    case Ren::Editor::StatusItemAlignment::Right: _statusProvidersRightAligned.PushBack(std::move(provider)); break;
-    }
+    _statusProviders.PushBack(std::move(provider));
 }
 
 void MainEditorUI::ShowWindow(const std::string& windowName, bool show)
 {
     for (auto& window : _editorWindows)
     {
-        if (std::string(window->GetName()) == windowName)
+        if (window->GetName() == windowName)
         {
             bool wasVisible = window->IsVisible();
             window->SetVisible(show);
@@ -303,6 +323,8 @@ void MainEditorUI::ShowWindow(const std::string& windowName, bool show)
             break;
         }
     }
+
+    REN_LOG_WARNING("");
 }
 
 } // namespace Ren::Editor

@@ -4,6 +4,8 @@
 #include <Rengine/Core/LogType.hxx>
 #include <chrono>
 #include <format>
+#include <memory>
+#include <string>
 #include <string_view>
 #include <type_traits>
 #include <vector>
@@ -31,6 +33,8 @@ struct LogEntry
 class ILogChannel
 {
 public:
+    ILogChannel()                              = default;
+    virtual ~ILogChannel()                     = default;
     virtual void OnLogged(const LogEntry& log) = 0;
 };
 
@@ -42,10 +46,12 @@ class LogSystem
 public:
     static LogSystem& GetInstance();
 
-    template <IsChannel T>
-    void AddChannel()
+    template <IsChannel T, typename... Args>
+    void AddChannel(Args&&... args)
     {
-        _logChannels.push_back(new T());
+        // TODO: No check to see if a channel already exists :(
+        // This is so bad but I will deal with it when I have time :3
+        _logChannels.push_back(std::make_unique<T>(std::forward<Args>(args)...));
     }
 
     void Log(std::string_view msg, LogType logType);
@@ -55,15 +61,16 @@ private:
 
     UInt32 _bufferSize{};
     std::vector<LogEntry> _logs{};
-    std::vector<ILogChannel*> _logChannels{};
+    std::vector<std::unique_ptr<ILogChannel>> _logChannels{};
 };
 } // namespace Ren
 
 template <>
-struct std::formatter<Ren::LogEntry>
+struct std::formatter<Ren::LogEntry> : std::formatter<std::string>
 {
     auto format(const Ren::LogEntry& logEntry, std::format_context& ctx) const
     {
-        return std::format_to(ctx.out(), "[{:%Y-%m-%d %X}] [{}] {}", logEntry.timestamp, logEntry.logType, logEntry.message);
+        return std::formatter<std::string>::format(
+            std::format("[{:%Y-%m-%d %X}] [{}] {}", logEntry.timestamp, logEntry.logType, logEntry.message), ctx);
     }
 };

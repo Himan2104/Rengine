@@ -10,6 +10,7 @@
 #include <functional>
 #include <map>
 #include <memory>
+#include <type_traits>
 #include <utility>
 
 namespace Ren
@@ -22,7 +23,7 @@ class IEvent // Interface for all Events
 };
 
 template <typename T>
-concept IsEvent = std::is_base_of<IEvent, T>::value;
+concept IsEvent = std::is_base_of_v<IEvent, T> && std::is_aggregate_v<T>;
 
 class EventSystem
 {

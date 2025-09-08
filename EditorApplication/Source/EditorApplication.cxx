@@ -51,8 +51,11 @@ void EditorApplication::Run()
     {
         _window->PollEvents();
 
-        _window->Clear();
         editor.RenderFrame();
+        _window->Clear();
+
+        ImGui::ShowDemoWindow();
+        ImGui::ShowMetricsWindow();
         _window->Display();
     }
 }
