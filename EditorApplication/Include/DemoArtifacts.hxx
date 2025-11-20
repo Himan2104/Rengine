@@ -2,10 +2,12 @@
 
 #include "Rengine/Core/Definitions.hxx"
 #include "Rengine/Core/Log.hxx"
+#include "Rengine/Editor/Icons.hxx"
 #include <Rengine/Editor/EditorWindow.hxx>
 #include <Rengine/Editor/MenuProvider.hxx>
 #include <Rengine/Editor/StatusProvider.hxx>
 #include <chrono>
+#include <format>
 #include <imgui.h>
 #include <string>
 #include <vector>
@@ -43,7 +45,7 @@ public:
 };
 
 // Example 2: Scene Hierarchy Window
-class EntitiesWindow : public EditorWindow<"Entities", ImGuiWindowFlags_None>
+class EntitiesWindow : public EditorWindow<ICON_FA_CUBES "  Entities", ImGuiWindowFlags_None>
 {
 private:
     std::vector<std::string> _entities = {"Main Camera", "Directional Light", "Player",        "Enemy1",      "Enemy2",
@@ -56,7 +58,10 @@ public:
         for (int i = 0; i < _entities.size(); ++i)
         {
             bool isSelected = (_selectedObject == i);
-            if (ImGui::Selectable(_entities[i].c_str(), isSelected)) { _selectedObject = i; }
+            if (ImGui::Selectable(std::format("{} {}", ICON_FA_CUBE, _entities[i].c_str()).c_str(), isSelected))
+            {
+                _selectedObject = i;
+            }
 
             if (ImGui::BeginPopupContextItem())
             {
@@ -105,7 +110,7 @@ public:
     {
         ImGui::Text("Console");
         ImGui::SameLine();
-        if (ImGui::SmallButton("Clear")) { _logs.clear(); }
+        if (ImGui::Button("Clear")) { _logs.clear(); }
         ImGui::SameLine();
         ImGui::Checkbox("Auto-scroll", &_autoScroll);
 
@@ -367,6 +372,7 @@ public:
 
         switch (m_buildState)
         {
+        case BuildState::Idle: break;
         case BuildState::Building:
             color = ImVec4(1, 1, 0, 1); // Yellow
             break;
@@ -379,7 +385,7 @@ public:
         }
 
         ImGui::PushStyleColor(ImGuiCol_Text, color);
-        ImGui::Text("Build: %s", m_buildMessage.c_str());
+        ImGui::Text(ICON_FA_HAMMER " Build: %s", m_buildMessage.c_str());
         ImGui::PopStyleColor();
 
         if (m_errorCount > 0 || m_warningCount > 0)

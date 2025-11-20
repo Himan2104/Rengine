@@ -2,6 +2,7 @@
 
 #include <Rengine/Core/String.hxx>
 #include <imgui.h>
+#include <type_traits>
 
 namespace Ren::Editor
 {
@@ -18,6 +19,9 @@ public:
     virtual void OnWindowClosed() {}
     virtual void OnWindowOpened() {}
 };
+
+template <typename T>
+concept IsEditorWindow = std::is_base_of_v<IEditorWindow, T>;
 
 template <FixedString name, ImGuiWindowFlags windowFlags>
 class EditorWindow : public IEditorWindow

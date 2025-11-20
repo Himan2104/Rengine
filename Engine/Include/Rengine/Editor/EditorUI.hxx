@@ -11,13 +11,17 @@
 namespace Ren::Editor
 {
 
-class MainEditorUI
+class EditorUI
 {
 public:
-    MainEditorUI();
-    ~MainEditorUI() = default;
+    EditorUI();
+    ~EditorUI() = default;
+
+    void Initialize();
 
     void RenderFrame();
+
+    Bool IsInitialized() const { return _initialized; }
 
     void AddWindow(std::unique_ptr<IEditorWindow> window);
     void RemoveWindow(const std::string& windowName);
@@ -32,7 +36,11 @@ public:
     void ShowWindow(const std::string& windowName, bool show = true);
     void ToggleWindow(const std::string& windowName);
 
+    void SetTheme();
+
 private:
+    void LoadFonts();
+
     void RenderMenuBar();
     void RenderStatusBar();
     void RenderWindows();
@@ -48,6 +56,8 @@ private:
     DynamicArray<std::unique_ptr<IEditorWindow>> _editorWindows;
     DynamicArray<std::unique_ptr<IMenuProvider>> _menuProviders;
     DynamicArray<std::unique_ptr<IStatusProvider>> _statusProviders;
+
+    Bool _initialized{false};
 
     // System info
     float m_cpuUsage     = 0.0f;

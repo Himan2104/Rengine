@@ -45,7 +45,7 @@ target_include_directories(rengine-gfx PUBLIC ${RENGINE_INCLUDE_DIRS} ${SFML_INC
 target_link_libraries(rengine-gfx PRIVATE rengine-core sfml-graphics)
 
 add_library(rengine-editor
-        Source/Editor/MainEditorUI.cxx)
+        Source/Editor/EditorUI.cxx)
 
 set_target_properties(rengine-editor PROPERTIES PREFIX "")
 target_include_directories(rengine-editor PUBLIC ${RENGINE_INCLUDE_DIRS} ${SFML_INCLUDE_DIR} ${IMGUI_DIR})

@@ -1,6 +1,6 @@
 #include <DemoArtifacts.hxx>
 #include <EditorApplication.hxx>
-#include <Rengine/Editor/MainEditorUI.hxx>
+#include <Rengine/Editor/EditorUI.hxx>
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <imgui-SFML.h>
 #include <imgui.h>
@@ -28,7 +28,7 @@ void EditorApplication::Initialize()
 
 void EditorApplication::Run()
 {
-    Editor::MainEditorUI editor;
+    Editor::EditorUI editor;
 
     editor.AddWindow(std::make_unique<Editor::PropertiesWindow>());
     editor.AddWindow(std::make_unique<Editor::EntitiesWindow>());

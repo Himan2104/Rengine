@@ -21,7 +21,15 @@ add_compile_definitions(REN_VERSION_MINOR=${PROJECT_VERSION_MINOR})
 add_compile_definitions(REN_VERSION_PATCH=${PROJECT_VERSION_PATCH})
 add_compile_definitions(IMGUI_USE_WCHAR32)
 
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/Binaries)
+
+add_custom_target(create_assets_symlink ALL
+    COMMAND ${CMAKE_COMMAND} -E make_directory "${PROJECT_SOURCE_DIR}/Binaries"
+    COMMAND ${CMAKE_COMMAND} -E create_symlink 
+        "${PROJECT_SOURCE_DIR}/Assets" 
+        "${PROJECT_SOURCE_DIR}/Binaries/Assets"
+    COMMENT "Creating Assets symlink in Binaries directory"
+)
 
 #dependencies
 add_subdirectory(External/SFML)
