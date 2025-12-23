@@ -1,7 +1,7 @@
 #pragma once
 
 #include <Rengine/Core/Config.hxx>
-#include <Rengine/Core/Definitions.hxx>
+#include <Rengine/Core/Types.hxx>
 #include <Rengine/Core/Hash.hxx>
 #include <type_traits>
 

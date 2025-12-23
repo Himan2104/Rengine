@@ -1,6 +1,6 @@
 #pragma once
 
-#include <Rengine/Core/Definitions.hxx>
+#include <Rengine/Core/Types.hxx>
 #include <Rengine/Graphics/RenderFlags.hxx>
 #include <SFML/Graphics/RenderStates.hpp>
 #include <SFML/Graphics/Vertex.hpp>

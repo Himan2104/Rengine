@@ -1,4 +1,4 @@
-#include "Rengine/Core/Definitions.hxx"
+#include "Rengine/Core/Types.hxx"
 #include <Rengine/Graphics/RenderObject.hxx>
 #include <Rengine/Graphics/Renderer.hxx>
 

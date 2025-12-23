@@ -1,7 +1,7 @@
 #pragma once
 
 #include "SFML/System/Vector3.hpp"
-#include <Rengine/Core/Definitions.hxx>
+#include <Rengine/Core/Types.hxx>
 #include <cassert>
 #include <cmath>
 

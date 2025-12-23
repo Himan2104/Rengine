@@ -1,5 +1,5 @@
 #pragma once
-#include <Rengine/Core/Definitions.hxx>
+#include <Rengine/Core/Types.hxx>
 #include <algorithm>
 #include <string_view>
 

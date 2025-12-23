@@ -1,7 +1,7 @@
 #pragma once
 
 #include <Rengine/Core/Array.hxx>
-#include <Rengine/Core/Definitions.hxx>
+#include <Rengine/Core/Types.hxx>
 #include <Rengine/Editor/EditorWindow.hxx>
 #include <Rengine/Editor/MenuProvider.hxx>
 #include <Rengine/Editor/StatusProvider.hxx>

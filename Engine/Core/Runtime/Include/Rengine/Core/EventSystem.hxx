@@ -3,7 +3,7 @@
 #include "Rengine/Core/UIDProvider.hxx"
 #include <Rengine/Core/Config.hxx>
 #include <Rengine/Core/Array.hxx>
-#include <Rengine/Core/Definitions.hxx>
+#include <Rengine/Core/Types.hxx>
 #include <Rengine/Core/Hash.hxx>
 #include <Rengine/Core/Log.hxx>
 #include <algorithm>

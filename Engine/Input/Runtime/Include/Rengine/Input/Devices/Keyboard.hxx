@@ -1,7 +1,7 @@
 #pragma once
 
 #include "SFML/Window/Keyboard.hpp"
-#include <Rengine/Core/Definitions.hxx>
+#include <Rengine/Core/Types.hxx>
 #include <Rengine/Input/Devices/IDevice.hxx>
 
 namespace Ren::Input::Devices

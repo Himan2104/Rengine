@@ -1,5 +1,5 @@
 #include "InBuiltEditorWindows/ThemeEditor.hxx"
-#include "Rengine/Core/Definitions.hxx"
+#include "Rengine/Core/Types.hxx"
 #include "Rengine/Core/Log.hxx"
 #include "Rengine/Editor/StatusProvider.hxx"
 #include "Rengine/Graphics/RenderFlags.hxx"

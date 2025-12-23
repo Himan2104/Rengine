@@ -1,6 +1,6 @@
 #pragma once
 
-#include <Rengine/Core/Definitions.hxx>
+#include <Rengine/Core/Types.hxx>
 #include <Rengine/Multithreading/LockFreeJobQueue.hxx>
 #include <atomic>
 #include <functional>

@@ -2,7 +2,7 @@
 
 #include <Rengine/Application/Resolution.hxx>
 #include <Rengine/Core/Color.hxx>
-#include <Rengine/Core/Definitions.hxx>
+#include <Rengine/Core/Types.hxx>
 #include <Rengine/Core/EventSystem.hxx>
 #include <Rengine/Core/Math/Vector2.hxx>
 #include <string>

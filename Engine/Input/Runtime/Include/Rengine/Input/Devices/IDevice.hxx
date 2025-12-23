@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Rengine/Core/EventSystem.hxx"
-#include <Rengine/Core/Definitions.hxx>
+#include <Rengine/Core/Types.hxx>
 #include <memory>
 #include <string_view>
 

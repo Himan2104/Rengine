@@ -2,7 +2,7 @@
 
 #include "Rengine/Core/Array.hxx"
 #include <Rengine/AssetPipeline/Asset.hxx>
-#include <Rengine/Core/Definitions.hxx>
+#include <Rengine/Core/Types.hxx>
 #include <map>
 #include <string>
 
