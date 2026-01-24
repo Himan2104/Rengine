@@ -2,7 +2,7 @@
 
 #include <Rengine/Application/IApplication.hxx>
 #include <Rengine/Application/Window.hxx>
-#include <Rengine/Core/Definitions.hxx>
+#include <Rengine/Core/Types.hxx>
 
 namespace Ren
 {

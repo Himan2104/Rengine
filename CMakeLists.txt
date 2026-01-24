@@ -25,8 +25,8 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/Binaries)
 
 add_custom_target(create_assets_symlink ALL
     COMMAND ${CMAKE_COMMAND} -E make_directory "${PROJECT_SOURCE_DIR}/Binaries"
-    COMMAND ${CMAKE_COMMAND} -E create_symlink 
-        "${PROJECT_SOURCE_DIR}/Assets" 
+    COMMAND ${CMAKE_COMMAND} -E create_symlink
+        "${PROJECT_SOURCE_DIR}/Assets"
         "${PROJECT_SOURCE_DIR}/Binaries/Assets"
     COMMENT "Creating Assets symlink in Binaries directory"
 )

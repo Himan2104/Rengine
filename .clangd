@@ -1,2 +1,3 @@
 CompileFlags:
     CompilationDatabase: "Build"
+    Add: ["-std=c++23"]
