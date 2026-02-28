@@ -1,15 +1,3 @@
-[submodule "External/SFML"]
-	path = External/SFML
-	url = https://github.com/SFML/SFML.git
-[submodule "External/sfeMovie"]
-	path = External/sfeMovie
-	url = https://github.com/Yalir/sfeMovie.git
-[submodule "External/tmxlite"]
-	path = External/tmxlite
-	url = https://github.com/fallahn/tmxlite.git
-[submodule "External/imgui"]
-	path = External/imgui
-	url = https://github.com/ocornut/imgui.git
-[submodule "External/imgui-sfml"]
-	path = External/imgui-sfml
-	url = https://github.com/himan2104/imgui-sfml.git
+[submodule "VRSFML"]
+	path = External/VRSFML
+	url = https://github.com/vittorioromeo/VRSFML.git

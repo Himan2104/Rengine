@@ -1,6 +1,7 @@
 #pragma once
 
 #include <Rengine/Core/Types.hxx>
+#include <SFML/Graphics/Color.hpp>
 #include <format>
 
 namespace Ren
@@ -14,6 +15,12 @@ public:
     constexpr Color(UInt8 r, UInt8 g, UInt8 b, UInt8 a);
 
     constexpr explicit Color(UInt32 color);
+
+    template <typename T>
+    constexpr operator sf::Color() const
+    {
+        return sf::Color(r, g, b, a);
+    }
 
     [[nodiscard]] constexpr UInt32 ToUInt32() const { return static_cast<std::uint32_t>((r << 24) | (g << 16) | (b << 8) | a); }
 

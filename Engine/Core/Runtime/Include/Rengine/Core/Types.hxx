@@ -25,8 +25,8 @@ using UInt16 = std::uint16_t;
 using UInt32 = std::uint32_t;
 using UInt64 = std::uint64_t;
 
-#ifdef REN_ENABLE_STD_FLOAT
-using Float16  = std::float16_t;
+#ifdef REN_ENABLE_FIXED_WIDTH_FLOATS
+using Float16  = std::float16_t; // NOLINT
 using Float32  = std::float32_t;
 using Float64  = std::float64_t;
 using Float128 = std::float128_t;

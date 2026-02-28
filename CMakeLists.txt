@@ -3,6 +3,8 @@ cmake_minimum_required(VERSION 3.27)
 project(Rengine VERSION 0.1.4 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 23)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_DEBUG_POSTFIX d)
 
 #option(BUILD_SHARED_LIBS "Build shared libraries" ON)
