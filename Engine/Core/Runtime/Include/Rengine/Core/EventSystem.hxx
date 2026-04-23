@@ -1,11 +1,11 @@
 #pragma once
 
 #include "Rengine/Core/UIDProvider.hxx"
-#include <Rengine/Core/Config.hxx>
 #include <Rengine/Core/Array.hxx>
-#include <Rengine/Core/Types.hxx>
+#include <Rengine/Core/Config.hxx>
 #include <Rengine/Core/Hash.hxx>
 #include <Rengine/Core/Log.hxx>
+#include <Rengine/Core/Types.hxx>
 #include <algorithm>
 #include <functional>
 #include <map>
@@ -62,7 +62,7 @@ void EventSystem::Invoke(Args&&... args)
 {
     auto event = std::make_shared<T>(T{{}, std::forward<Args>(args)...});
     auto& x    = _subscribers[GetEventTypeID<T>()];
-    std::for_each(x.Begin(), x.End(), [&](auto& pair) { pair.second(event); });
+    std::for_each(x.Begin(), x.End(), [&event](auto& pair) { pair.second(event); });
 }
 
 template <IsEvent T>
@@ -77,7 +77,7 @@ template <IsEvent T>
 void EventSystem::Unsubscribe(EventSubscriptionToken est)
 {
     auto& x = _subscribers[GetEventTypeID<T>()];
-    auto it = std::find_if(x.Begin(), x.End(), [&](const auto& entry) { return entry.first == est; });
+    auto it = std::find_if(x.Begin(), x.End(), [&est](const auto& entry) { return entry.first == est; });
     if (it != x.End())
     {
         x.Remove(it);

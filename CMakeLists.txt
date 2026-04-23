@@ -34,13 +34,9 @@ add_custom_target(create_assets_symlink ALL
 )
 
 #dependencies
-add_subdirectory(External/SFML)
-set(SFML_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/External/SFML/include)
-set(IMGUI_DIR ${CMAKE_CURRENT_SOURCE_DIR}/External/imgui)
-set(IMGUI_SFML_INC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/External/imgui-sfml)
+add_subdirectory(External/VRSFML)
 set(IMGUI_SFML_FIND_SFML OFF)
 set(IMGUI_SFML_IMGUI_DEMO ON)
-add_subdirectory(External/imgui-sfml)
 
 #Rengine
 add_subdirectory(Engine)

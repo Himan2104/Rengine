@@ -2,15 +2,13 @@
 #include "Rengine/Core/EventSystem.hxx"
 #include "Rengine/Core/Log.hxx"
 #include "Rengine/Core/Types.hxx"
-#include "Rengine/Core/Vector.hxx"
-#include "SFML/Graphics/RenderWindow.hpp"
 #include "SFML/System/Clock.hpp"
 #include "SFML/Window/VideoMode.hpp"
 #include "SFML/Window/WindowEnums.hpp"
+#include "VSFML/Graphics/RenderWindow.hpp"
 #include <Rengine/Application/Window.hxx>
 #include <SFML/Window/Window.hpp>
 #include <imgui-SFML.h>
-#include <optional>
 
 #define __REN_HANDLE_WINDOW_EVENT_ALIAS__(EventName, AliasName) \
     if (event->is<sf::Event::EventName>()) Ren::EventSystem::GetInstance().Invoke<WindowEvents::AliasName>();
@@ -62,7 +60,7 @@ public:
             REN_HANDLE_WINDOW_EVENT(MouseButtonPressed);
             REN_HANDLE_WINDOW_EVENT(MouseButtonReleased);
             REN_HANDLE_WINDOW_EVENT(MouseMoved);
-            REN_HANDLE_WINDOW_EVENT(MouseEntered);
+            REN_HANDLE_WINDOW_EVENT(MouseEntered)
             REN_HANDLE_WINDOW_EVENT(MouseLeft, MouseExited);
 
             // TODO: Implement remaining events
